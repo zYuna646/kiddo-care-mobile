@@ -17,6 +17,7 @@ export default function PasswordForm({ title, onChangeText, value, icon, visible
         <View style={styles.form}>
           <FontAwesome name={icon} size={20} style={styles.icon} />
           <TextInput
+            placeholder={`Masukkan ${title}`}
             style={styles.inputForm}
             onChangeText={onChangeText}
             isPasswordVisible={isPasswordVisible}

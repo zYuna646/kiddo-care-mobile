@@ -10,6 +10,7 @@ export default function InputForm({ title, onChangeText, value, icon }) {
         <View style={styles.form}>
           <FontAwesome name={icon} size={20} style={styles.icon} />
           <TextInput
+            placeholder={`Masukkan ${title}`}
             style={styles.inputForm}
             onChangeText={onChangeText}
             value={value}
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderColor: "gray",
     flexDirection: "row",
-    alignItems: 'center',
+    alignItems: "center",
     borderWidth: 1,
     borderRadius: 10,
   },
@@ -44,13 +45,13 @@ const styles = StyleSheet.create({
 
   inputForm: {
     margin: 10,
-    width: '85%',
+    width: "85%",
     fontSize: 14,
-    color: '#343A40'
+    color: "#343A40",
   },
 
   icon: {
     marginLeft: 15,
-    color: '#AEB0B3'
+    color: "#AEB0B3",
   },
 });
