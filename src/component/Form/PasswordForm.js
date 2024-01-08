@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     width: "77%",
     fontSize: 14,
     color: "#343A40",
-    backgroundColor:'red'
   },
 
   icon: {
