@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity } from "react-nativ
 import { FontAwesome } from "@expo/vector-icons";
 import React, {useState} from "react";
 
-export default function PasswordForm({ title, onChangeText, value, icon, visible }) {
+export default function PasswordForm({ title, onChangeText, value, icon, visible=true }) {
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(visible);
 
@@ -34,7 +34,7 @@ export default function PasswordForm({ title, onChangeText, value, icon, visible
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
+    width: "100%",
   },
 
   inputContainer: {},
@@ -51,24 +51,25 @@ const styles = StyleSheet.create({
   },
 
   labelForm: {
-    fontFamily: "Poppins",
+    fontFamily: "Poppins-Bold",
     fontSize: 14,
     color: "#343A40",
   },
 
   inputForm: {
     margin: 10,
-    width: "77%",
+    width: "80%",
     fontSize: 14,
     color: "#343A40",
   },
 
   icon: {
-    marginLeft: 15,
+    marginLeft: 10,
     color: "#AEB0B3",
   },
 
   eyeIcon: {
+    marginRight: 10,
     color: "#AEB0B3",
   }
 });

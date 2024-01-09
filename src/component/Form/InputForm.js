@@ -23,7 +23,7 @@ export default function InputForm({ title, onChangeText, value, icon }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
+    width: "100%",
   },
 
   inputContainer: {},
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
 
   labelForm: {
-    fontFamily: "Poppins",
+    fontFamily: "Poppins-Bold",
     fontSize: 14,
     color: "#343A40",
   },

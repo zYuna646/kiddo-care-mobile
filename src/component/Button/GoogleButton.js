@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     borderColor: "gray",
-    width: "90%",
+    width: "100%",
     borderWidth: 1,
   },
 
@@ -32,6 +32,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: '#343A40',
     fontSize: 16,
-    fontFamily: "Poppins",
+    fontFamily: "Poppins-Medium",
   },
 });

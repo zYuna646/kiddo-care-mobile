@@ -11,6 +11,7 @@ export default function TextButton({ onPress, title }) {
 
 const styles = StyleSheet.create({
   buttonText: {
+    fontFamily: 'Poppins-Light',
     fontSize: 12,
     color: "#00A3FF",
   },
