@@ -1,5 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Animated,
+} from "react-native";
+import React, { useState, useRef, useEffect } from "react";
 import { useFonts } from "expo-font";
 import InputForm from "../../component/Form/InputForm";
 import PasswordForm from "../../component/Form/PasswordForm";
@@ -7,10 +13,29 @@ import TextButton from "../../component/Button/TextButton";
 import PrimaryButton from "../../component/Button/PrimaryButton";
 import CenterLineText from "../../component/Text/CenterLineText";
 import GoogleButton from "../../component/Button/GoogleButton";
+import IconButton from "../../component/Button/IconButton";
 
 export default function SignInScreen() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+
+  const slideAnim = useRef(new Animated.Value(1000)).current;
+
+  const slideIn = () => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const slideOut = () => {
+    Animated.timing(slideAnim, {
+      toValue: 1000,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
 
   return (
     <View style={styles.container}>
@@ -27,10 +52,10 @@ export default function SignInScreen() {
       <View style={styles.body}>
         <View style={styles.bodyContent}>
           <View>
-            <InputForm icon="envelope-o" title="Email/Nomor Telepon" />
+            <InputForm icon="envelope-o" title="Email/Nomor Telepon" onChangeText={setemail} value={email} />
           </View>
           <View style={{ marginTop: "5%" }}>
-            <PasswordForm icon="lock" title="Password" />
+            <PasswordForm icon="lock" title="Password" onChangeText={setPassword} value={password} visible={true}/>
           </View>
           <View style={{ marginTop: "5%", alignSelf: "flex-end" }}>
             <TextButton title="Lupa Password ?" />
@@ -54,15 +79,36 @@ export default function SignInScreen() {
             <Text style={{ color: "#BDBDBD", fontSize: 12, marginRight: 5 }}>
               Belum memiliki akun?
             </Text>
-            <TextButton title="Buat Akun" />
+            <TextButton onPress={slideIn} title="Buat Akun" />
           </View>
         </View>
       </View>
-      <View style={styles.popup}>
-        <View style={styles.pop}>
 
+      <Animated.View style={[styles.popup, { bottom: slideAnim }]}>
+        <View style={styles.pop}>
+          <View style={styles.popItem}>
+            <Text
+              style={{
+                alignSelf: "center",
+                fontSize: 24,
+                fontFamily: "Poppins-Bold",
+              }}
+            >
+              Daftar Sebagai
+            </Text>
+            <View style={{ marginTop: "5%" }}>
+              <IconButton icon="plus" title="Puskesmas" onPress={slideOut} />
+            </View>
+            <View style={{ marginTop: "5%" }}>
+              <IconButton
+                icon="user-circle"
+                title="Pribadi"
+                onPress={slideOut}
+              />
+            </View>
+          </View>
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 }
@@ -70,25 +116,28 @@ export default function SignInScreen() {
 const styles = StyleSheet.create({
   popup: {
     position: "absolute",
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     height: "100%",
     width: "100%",
-   
   },
 
-  pop:
-  {
+  popItem: {
+    marginTop: "5%",
+    width: "90%",
+    alignSelf: "center",
+  },
+
+  pop: {
     position: "absolute",
     bottom: 0,
     height: "50%",
     width: "100%",
     borderTopLeftRadius: 20,
-    borderTopRightRadius:20,
+    borderTopRightRadius: 20,
     backgroundColor: "white",
   },
 
   container: {
-    
     height: "100%",
     width: "100%",
   },

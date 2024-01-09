@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity } from "react-nativ
 import { FontAwesome } from "@expo/vector-icons";
 import React, {useState} from "react";
 
-export default function PasswordForm({ title, onChangeText, value, icon, visible=true }) {
+export default function PasswordForm({ title, onChangeText, value, icon, visible }) {
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(visible);
 
@@ -20,7 +20,7 @@ export default function PasswordForm({ title, onChangeText, value, icon, visible
             placeholder={`Masukkan ${title}`}
             style={styles.inputForm}
             onChangeText={onChangeText}
-            isPasswordVisible={isPasswordVisible}
+            secureTextEntry={!isPasswordVisible}
             value={value}
           />
            <TouchableOpacity onPress={togglePasswordVisibility} style={styles.iconContainer}>
