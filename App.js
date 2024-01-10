@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import PrimaryButton from "./src/component/Button/PrimaryButton";
 import SignInScreen from "./src/screens/singIn/SignInScreen";
 import { useFonts } from "expo-font";
+import SignUpScreen from "./src/screens/singIn/SingupScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -17,7 +18,7 @@ export default function App() {
   }
   return (
     <View>
-      <SignInScreen />
+      <SignUpScreen />
     </View>
   );
 }
