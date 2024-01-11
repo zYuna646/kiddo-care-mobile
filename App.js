@@ -19,11 +19,13 @@ export default function App() {
     return undefined;
   }
 
+  const user = null
+
   const Stack = createNativeStackNavigator();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName={user != null ? "Home" : "SingIn"}>
         <Stack.Screen
           name="Home"
           component={HomeScreen}

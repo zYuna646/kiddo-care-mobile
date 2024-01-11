@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.example.com";
+const BASE_URL = "http://127.0.0.1:8000/api/";
 
 const ApiRequest = async (endpoint, method = "GET", body = null) => {
   const url = `${BASE_URL}/${endpoint}`;
