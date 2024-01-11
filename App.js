@@ -6,6 +6,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./src/screens/home/HomeScreen";
 import SignUpScreenUser from "./src/screens/singIn/SingupScreenUser";
 import SignInScreen from "./src/screens/singIn/SignInScreen";
+import VerifikasiOTPScreen from "./src/screens/verifikasi/VerifikasiOTPScreen";
+import { getData } from "./src/utils/StorageData";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -15,11 +18,26 @@ export default function App() {
     "Poppins-Medium": require("./assets/fonts/Poppins/Poppins-Medium.ttf"),
   });
 
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await getData("user");
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error.message);
+      }
+    };
+
+    if (fontsLoaded) {
+      fetchData();
+    }
+  }, [fontsLoaded]);
+
   if (!fontsLoaded) {
     return undefined;
   }
-
-  const user = null
 
   const Stack = createNativeStackNavigator();
 
@@ -39,6 +57,11 @@ export default function App() {
         <Stack.Screen
           name="SingIn"
           component={SignInScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="VerifikasiOTP"
+          component={VerifikasiOTPScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
