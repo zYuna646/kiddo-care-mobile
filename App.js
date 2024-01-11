@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import PrimaryButton from "./src/component/Button/PrimaryButton";
-import SignInScreen from "./src/screens/singIn/SignInScreen";
 import { useFonts } from "expo-font";
-import SignUpScreen from "./src/screens/singIn/SingupScreen";
-import VerifikasiOTPScreen from "./src/screens/verifikasi/VerifikasiOTPScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "./src/screens/home/HomeScreen";
+import SignUpScreenUser from "./src/screens/singIn/SingupScreenUser";
+import SignInScreen from "./src/screens/singIn/SignInScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -17,10 +18,29 @@ export default function App() {
   if (!fontsLoaded) {
     return undefined;
   }
+
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View>
-      <VerifikasiOTPScreen />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SingUpUser"
+          component={SignUpScreenUser}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SingIn"
+          component={SignInScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

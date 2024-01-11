@@ -16,7 +16,7 @@ import GoogleButton from "../../component/Button/GoogleButton";
 import IconButton from "../../component/Button/IconButton";
 import Checkbox from "expo-checkbox";
 
-export default function SignUpScreen() {
+export default function SignUpScreenUser() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
