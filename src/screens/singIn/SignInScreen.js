@@ -16,6 +16,8 @@ import GoogleButton from "../../component/Button/GoogleButton";
 import IconButton from "../../component/Button/IconButton";
 import ApiRequest from "../../utils/ApiRequest";
 import { getData, storeData } from "../../utils/StorageData";
+import { BackHandler } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function SignInScreen({ navigation }) {
   const [email, setemail] = useState("");
@@ -33,6 +35,14 @@ export default function SignInScreen({ navigation }) {
     }).start();
   };
 
+  const slideOut = () => {
+    Animated.timing(slideAnim, {
+      toValue: 1000,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
+
   const login = async () => {
     try {
       const data = await ApiRequest("users/login", "POST", {
@@ -40,12 +50,22 @@ export default function SignInScreen({ navigation }) {
         password: password,
       });
       if (data != null) {
+        Toast.show({
+          type: "success",
+          text1: "Masuk Akun",
+          text2: "Berhasil Masuk",
+        });
+
         await storeData("user", data.data).then(() => {
           navigation.navigate("Home");
         });
       }
     } catch (error) {
-      console.log(error.response.data);
+      Toast.show({
+        type: "error",
+        text1: "Masuk Akun",
+        text2: "Email/Nomor Telepon atau Password Salah",
+      });
     }
   };
 
@@ -80,14 +100,6 @@ export default function SignInScreen({ navigation }) {
     validateEmail();
     validatePassword();
   }, [email, password]);
-
-  const slideOut = () => {
-    Animated.timing(slideAnim, {
-      toValue: 1000,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  };
 
   return (
     <View style={styles.container}>
@@ -168,6 +180,7 @@ export default function SignInScreen({ navigation }) {
                 icon="plus"
                 title="Puskesmas"
                 onPress={() => {
+                  slideOut();
                   navigation.navigate("SingUpPetugas");
                 }}
               />
@@ -177,6 +190,7 @@ export default function SignInScreen({ navigation }) {
                 icon="user-circle"
                 title="Pribadi"
                 onPress={() => {
+                  slideOut();
                   navigation.navigate("SingUpUser");
                 }}
               />

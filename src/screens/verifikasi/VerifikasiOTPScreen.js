@@ -2,7 +2,8 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 import TextButton from "../../component/Button/TextButton";
 
-export default function VerifikasiOTPScreen() {
+export default function VerifikasiOTPScreen({navigation, route}) {
+  console.log(route.params.data);
   return (
     <View style={styles.container}>
       <View style={styles.header}>

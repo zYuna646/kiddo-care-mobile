@@ -8,8 +8,9 @@ import SignUpScreenUser from "./src/screens/singIn/SingupScreenUser";
 import SignUpScreenPetugas from "./src/screens/singIn/SingupScreenPetugas";
 import SignInScreen from "./src/screens/singIn/SignInScreen";
 import VerifikasiOTPScreen from "./src/screens/verifikasi/VerifikasiOTPScreen";
-import { getData } from "./src/utils/StorageData";
+import { getData, removeData } from "./src/utils/StorageData";
 import { useEffect, useState } from "react";
+import Toast from 'react-native-toast-message';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,6 +21,7 @@ export default function App() {
   });
 
   const [user, setUser] = useState(null);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,35 +45,38 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={user != null ? "Home" : "SingIn"}>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SingUpUser"
-          component={SignUpScreenUser}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SingUpPetugas"
-          component={SignUpScreenPetugas}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SingIn"
-          component={SignInScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="VerifikasiOTP"
-          component={VerifikasiOTPScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={"Home"}>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SingUpUser"
+            component={SignUpScreenUser}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SingUpPetugas"
+            component={SignUpScreenPetugas}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SingIn"
+            component={SignInScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="VerifikasiOTP"
+            component={VerifikasiOTPScreen}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <Toast />
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-const BASE_URL = "https://7922-36-85-221-64.ngrok-free.app/api";
+const BASE_URL = "https://5573-36-85-220-249.ngrok-free.app/api";
 import axios from "axios";
 
 const ApiRequest = async (endpoint, method = "GET", body = null) => {
@@ -14,12 +14,19 @@ const ApiRequest = async (endpoint, method = "GET", body = null) => {
     });
 
     if (!(response.status >= 200 && response.status < 300)) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      if (response.data && response.data.errors) {
+        const errorMessage = response.data.errors.message;
+        console.error(
+          `API error! Status: ${response.status}, Message: ${errorMessage}`
+        );
+        throw new Error(errorMessage);
+      } else {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
     }
 
     return response.data;
   } catch (error) {
-    
     throw error;
   }
 };
