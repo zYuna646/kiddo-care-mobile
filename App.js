@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./src/screens/home/HomeScreen";
 import SignUpScreenUser from "./src/screens/singIn/SingupScreenUser";
+import SignUpScreenPetugas from "./src/screens/singIn/SingupScreenPetugas";
 import SignInScreen from "./src/screens/singIn/SignInScreen";
 import VerifikasiOTPScreen from "./src/screens/verifikasi/VerifikasiOTPScreen";
 import { getData } from "./src/utils/StorageData";
@@ -52,6 +53,11 @@ export default function App() {
         <Stack.Screen
           name="SingUpUser"
           component={SignUpScreenUser}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SingUpPetugas"
+          component={SignUpScreenPetugas}
           options={{ headerShown: false }}
         />
         <Stack.Screen

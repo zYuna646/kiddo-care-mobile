@@ -14,10 +14,14 @@ import PrimaryButton from "../../component/Button/PrimaryButton";
 import CenterLineText from "../../component/Text/CenterLineText";
 import GoogleButton from "../../component/Button/GoogleButton";
 import IconButton from "../../component/Button/IconButton";
+import ApiRequest from "../../utils/ApiRequest";
+import { getData, storeData } from "../../utils/StorageData";
 
-export default function SignInScreen() {
+export default function SignInScreen({navigation}) {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
+  const [isValidEmail, setValidEmail] = useState(false);
+  const [isValidPass, setValidPass] = useState(false);
 
   const slideAnim = useRef(new Animated.Value(1000)).current;
 
@@ -28,6 +32,54 @@ export default function SignInScreen() {
       useNativeDriver: false,
     }).start();
   };
+
+  const login = async () => {
+    try {
+      const data = await ApiRequest("users/login", "POST", {
+        username: email,
+        password: password,
+      });
+      if (data != null) {
+        await storeData("user", data.data).then(() => {
+          navigation.navigate("Home");
+        });
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  const validateEmail = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      if (/^\d+$/.test(email) && email.length >= 10) {
+        setValidEmail(true);
+        return true;
+      } else {
+        setValidEmail(false);
+        return false;
+      }
+    }
+
+    setValidEmail(true);
+    return true;
+  };
+
+  const validatePassword = () => {
+    if (password.length < 6) {
+      setValidPass(false);
+      return false;
+    }
+
+    setValidPass(true);
+    return true;
+  };
+
+  useEffect(() => {
+    validateEmail();
+    validatePassword();
+  }, [email, password]);
 
   const slideOut = () => {
     Animated.timing(slideAnim, {
@@ -52,16 +104,31 @@ export default function SignInScreen() {
       <View style={styles.body}>
         <View style={styles.bodyContent}>
           <View>
-            <InputForm icon="envelope-o" title="Email/Nomor Telepon" onChangeText={setemail} value={email} />
+            <InputForm
+              icon="envelope-o"
+              title="Email/Nomor Telepon"
+              onChangeText={setemail}
+              value={email}
+            />
           </View>
           <View style={{ marginTop: "5%" }}>
-            <PasswordForm icon="lock" title="Password" onChangeText={setPassword} value={password} visible={true}/>
+            <PasswordForm
+              icon="lock"
+              title="Password"
+              onChangeText={setPassword}
+              value={password}
+              visible={true}
+            />
           </View>
           <View style={{ marginTop: "5%", alignSelf: "flex-end" }}>
             <TextButton title="Lupa Password ?" />
           </View>
           <View style={{ marginTop: "5%" }}>
-            <PrimaryButton title="Masuk Akun" />
+            <PrimaryButton
+              title="Masuk Akun"
+              onPress={login}
+              disabled={!(isValidEmail && isValidPass)}
+            />
           </View>
           <View style={{ marginTop: "5%" }}>
             <CenterLineText title="Atau" />

@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function HomeScreen() {
-
+export default function SingupScreenPetugas() {
   return (
     <View>
-      <Text>HomeScreen</Text>
+      <Text>SingupScreenPetugas</Text>
     </View>
   )
 }
