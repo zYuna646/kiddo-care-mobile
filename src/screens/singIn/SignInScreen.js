@@ -17,7 +17,7 @@ import IconButton from "../../component/Button/IconButton";
 import ApiRequest from "../../utils/ApiRequest";
 import { getData, storeData } from "../../utils/StorageData";
 
-export default function SignInScreen({navigation}) {
+export default function SignInScreen({ navigation }) {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [isValidEmail, setValidEmail] = useState(false);
@@ -164,13 +164,21 @@ export default function SignInScreen({navigation}) {
               Daftar Sebagai
             </Text>
             <View style={{ marginTop: "5%" }}>
-              <IconButton icon="plus" title="Puskesmas" onPress={slideOut} />
+              <IconButton
+                icon="plus"
+                title="Puskesmas"
+                onPress={() => {
+                  navigation.navigate("SingUpPetugas");
+                }}
+              />
             </View>
             <View style={{ marginTop: "5%" }}>
               <IconButton
                 icon="user-circle"
                 title="Pribadi"
-                onPress={slideOut}
+                onPress={() => {
+                  navigation.navigate("SingUpUser");
+                }}
               />
             </View>
           </View>
