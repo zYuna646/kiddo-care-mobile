@@ -68,6 +68,7 @@ export default function App() {
             component={SignInScreen}
             options={{ headerShown: false }}
           />
+          
           <Stack.Screen
             name="VerifikasiOTP"
             component={VerifikasiOTPScreen}
