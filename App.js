@@ -11,6 +11,8 @@ import VerifikasiOTPScreen from "./src/screens/verifikasi/VerifikasiOTPScreen";
 import { getData, removeData } from "./src/utils/StorageData";
 import { useEffect, useState } from "react";
 import Toast from 'react-native-toast-message';
+import TabUser from "./src/screens/TabUser";
+import ProfilScreen from "./src/screens/profil/ProfilScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -50,7 +52,7 @@ export default function App() {
         <Stack.Navigator initialRouteName={"Home"}>
           <Stack.Screen
             name="Home"
-            component={HomeScreen}
+            component={TabUser}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -72,6 +74,11 @@ export default function App() {
           <Stack.Screen
             name="VerifikasiOTP"
             component={VerifikasiOTPScreen}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="Profile"
+            component={ProfilScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

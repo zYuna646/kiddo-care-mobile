@@ -13,6 +13,7 @@ import { getData } from "../../utils/StorageData";
 import IconButton from "../../component/Button/IconButton";
 import IconMenuButton from "../../component/Button/IconMenuButton";
 import TextButton from "../../component/Button/TextButton";
+import ArtikelCard from "../../component/Card/ArtikelCard";
 
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState(null);
@@ -49,8 +50,8 @@ export default function HomeScreen({ navigation }) {
           </View>
           <View style={styles.menu}>
             <IconMenuButton icon="search" size={22} />
-            <IconMenuButton icon="user-circle-o" size={22} />
             <IconMenuButton icon="bell-o" size={22} />
+            <IconMenuButton icon="user-circle-o" size={22} onPress={() => {navigation.navigate("Profile")}}/>
           </View>
         </View>
       </View>
@@ -126,68 +127,14 @@ export default function HomeScreen({ navigation }) {
           <View
             style={{ flexDirection: "row", marginTop: 10, alignSelf: "center" }}
           >
-            <View
-              style={{
-                width: 171,
-                height: 244,
-                backgroundColor: "white",
-                borderRadius: 10,
-                marginLeft: 5,
-                marginRight: 5,
-              }}
-            >
-              <View
-                style={{ alignSelf: "center", marginTop: "10%", width: "90%" }}
-              >
-                <Image
-                  source={{
-                    uri: "https://s3.zerochan.net/Gotou.Hitori.240.3852289.jpg",
-                  }}
-                  resizeMode="cover"
-                  style={{ height: 113, width: 151, borderRadius: 10 }}
-                />
-                <Text
-                  style={{
-                    marginTop: "5%",
-                    fontSize: 16,
-                    fontFamily: "Poppins-Bold",
-                  }}
-                >
-                  Pahami Konsep Gizi Seimbang
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                width: 171,
-                height: 244,
-                backgroundColor: "white",
-                borderRadius: 10,
-                marginLeft: 5,
-                marginRight: 5,
-              }}
-            >
-              <View
-                style={{ alignSelf: "center", marginTop: "10%", width: "90%" }}
-              >
-                <Image
-                  source={{
-                    uri: "https://s3.zerochan.net/Gotou.Hitori.240.3852289.jpg",
-                  }}
-                  resizeMode="cover"
-                  style={{ height: 113, width: 151, borderRadius: 10 }}
-                />
-                <Text
-                  style={{
-                    marginTop: "5%",
-                    fontSize: 16,
-                    fontFamily: "Poppins-Bold",
-                  }}
-                >
-                  Pahami Konsep Gizi Seimbang
-                </Text>
-              </View>
-            </View>
+            <ArtikelCard
+              image="https://s3.zerochan.net/Gotou.Hitori.240.3852289.jpg"
+              title="Gizi"
+            />
+            <ArtikelCard
+              image="https://s3.zerochan.net/Gotou.Hitori.240.3852289.jpg"
+              title="Gizi"
+            />
           </View>
         </ScrollView>
       </View>
