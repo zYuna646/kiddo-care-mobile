@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         padding: 12,
         borderRadius: 10,
-        width: '90%',
+        width: '100%',
       },
       buttonContainer: {
         justifyContent: 'center',
@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
       buttonText: {
         color: '#fff',
         fontSize: 16,
-        fontFamily: "Poppins"
+        fontFamily: "Poppins-Bold"
       },
 });

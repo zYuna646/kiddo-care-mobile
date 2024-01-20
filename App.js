@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import Toast from 'react-native-toast-message';
 import TabUser from "./src/screens/TabUser";
 import ProfilScreen from "./src/screens/profil/ProfilScreen";
+import ProfileDetail from "./src/screens/profil/ProfileDetail";
+import InfoAplikasi from "./src/screens/profil/InfoAplikasi";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -74,6 +76,16 @@ export default function App() {
           <Stack.Screen
             name="VerifikasiOTP"
             component={VerifikasiOTPScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ProfileDetail"
+            component={ProfileDetail}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="InfoAplikasi"
+            component={InfoAplikasi}
             options={{ headerShown: false }}
           />
            <Stack.Screen

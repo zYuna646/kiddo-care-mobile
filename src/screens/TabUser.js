@@ -11,7 +11,7 @@ export default function TabUser() {
   return (
     <Tab.Navigator initialRouteName="Home">
       <Tab.Screen
-        name="Home"
+        name="HomeUser"
         component={HomeScreen}
         options={{ headerShown: false }}
       />

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
-import { getData } from "../../utils/StorageData";
+import { getData, removeData } from "../../utils/StorageData";
 import IconButton from "../../component/Button/IconButton";
 import IconMenuButton from "../../component/Button/IconMenuButton";
 import TextButton from "../../component/Button/TextButton";
