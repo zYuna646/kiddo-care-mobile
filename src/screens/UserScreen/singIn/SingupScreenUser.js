@@ -7,16 +7,15 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
-import InputForm from "../../component/Form/InputForm";
-import PasswordForm from "../../component/Form/PasswordForm";
-import TextButton from "../../component/Button/TextButton";
-import PrimaryButton from "../../component/Button/PrimaryButton";
-import CenterLineText from "../../component/Text/CenterLineText";
-import GoogleButton from "../../component/Button/GoogleButton";
-import IconButton from "../../component/Button/IconButton";
+import InputForm from "../../../component/Form/InputForm";
+import PasswordForm from "../../../component/Form/PasswordForm";
+import TextButton from "../../../component/Button/TextButton";
+import PrimaryButton from "../../../component/Button/PrimaryButton";
+import CenterLineText from "../../../component/Text/CenterLineText";
+import GoogleButton from "../../../component/Button/GoogleButton";
 import Checkbox from "expo-checkbox";
 import Toast from "react-native-toast-message";
-import ApiRequest from "../../utils/ApiRequest";
+import ApiRequest from "../../../utils/ApiRequest";
 
 export default function SignUpScreenUser({navigation}) {
   const [email, setEmail] = useState("");

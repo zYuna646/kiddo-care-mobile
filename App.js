@@ -4,9 +4,9 @@ import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./src/screens/UserScreen/home/HomeScreen";
-import SignUpScreenUser from "./src/screens/singIn/SingupScreenUser";
+import SignUpScreenUser from "./src/screens/UserScreen/singIn/SingupScreenUser"
 import SignUpScreenPetugas from "./src/screens/PetugasScreen/SingupScreenPetugas";
-import SignInScreen from "./src/screens/singIn/SignInScreen";
+import SignInScreen from "./src/screens/UserScreen/singIn/SignInScreen";
 import VerifikasiOTPScreen from "./src/screens/verifikasi/VerifikasiOTPScreen";
 import { getData, removeData } from "./src/utils/StorageData";
 import { useEffect, useState } from "react";
