@@ -15,6 +15,8 @@ import TabUser from "./src/screens/TabUser";
 import ProfilScreen from "./src/screens/profil/ProfilScreen";
 import ProfileDetail from "./src/screens/profil/ProfileDetail";
 import InfoAplikasi from "./src/screens/profil/InfoAplikasi";
+import EditProfile from "./src/screens/profil/EditProfile";
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -70,6 +72,11 @@ export default function App() {
           <Stack.Screen
             name="SingIn"
             component={SignInScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="EditProfile"
+            component={EditProfile}
             options={{ headerShown: false }}
           />
           
