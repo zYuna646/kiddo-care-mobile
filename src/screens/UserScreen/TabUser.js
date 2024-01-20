@@ -12,10 +12,11 @@ export default function TabUser() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{
+      screenOptions={{
         activeTintColor: "#00A3FF", // Change the color of the active tab
         inactiveTintColor: "gray", // Change the color of inactive tabs
       }}
+    
      
     >
       <Tab.Screen

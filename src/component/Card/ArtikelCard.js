@@ -3,7 +3,7 @@ import React from "react";
 
 export default function ArtikelCard({ image, title }) {
   return (
-    <TouchableOpacity onPress={() =>{}}>
+    <TouchableOpacity onPress={() => {}}>
       <View
         style={{
           width: 171,
@@ -12,6 +12,11 @@ export default function ArtikelCard({ image, title }) {
           borderRadius: 10,
           marginLeft: 5,
           marginRight: 5,
+          shadowColor: "rgba(0, 0, 0, 0.5)",
+          shadowOpacity: 0.5,
+          elevation: 6,
+          shadowRadius: 5,
+          shadowOffset: { width: 1, height: 5 },
         }}
       >
         <View style={{ alignSelf: "center", marginTop: "10%", width: "90%" }}>

@@ -36,8 +36,8 @@ export default function HomeScreen({ navigation }) {
   }, [user]);
 
   const data = [
-    { id: "1", text: "Item 1" },
-    { id: "2", text: "Item 2" },
+    { id: "1", text: "Item 1asdasidjioasodjias" },
+    { id: "2", text: "Item 2saoijdisja" },
     { id: "3", text: "Item 3" },
   ];
 
@@ -86,7 +86,7 @@ export default function HomeScreen({ navigation }) {
               </Text>
               <TextButton title="Lainnya" size={14} />
             </View>
-            <View style={{ height: 35 }}>
+            <View style={{ height: 35, }}>
               <ScrollView style={{ width: 350, height: 10 }} horizontal={true}>
                 {data.map((item) => (
                   <TouchableOpacity
@@ -136,6 +136,30 @@ export default function HomeScreen({ navigation }) {
               title="Gizi"
             />
           </View>
+          <View
+            style={{ flexDirection: "row", marginTop: 10, alignSelf: "center" }}
+          >
+            <ArtikelCard
+              image="https://s3.zerochan.net/Gotou.Hitori.240.3852289.jpg"
+              title="Gizi"
+            />
+            <ArtikelCard
+              image="https://s3.zerochan.net/Gotou.Hitori.240.3852289.jpg"
+              title="Gizi"
+            />
+          </View>
+          <View
+            style={{ flexDirection: "row", marginTop: 10, alignSelf: "center" }}
+          >
+            <ArtikelCard
+              image="https://s3.zerochan.net/Gotou.Hitori.240.3852289.jpg"
+              title="Gizi"
+            />
+            <ArtikelCard
+              image="https://s3.zerochan.net/Gotou.Hitori.240.3852289.jpg"
+              title="Gizi"
+            />
+          </View>
         </ScrollView>
       </View>
     </View>
@@ -143,14 +167,17 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   header: {
-    height: 100,
+    flex: 1,
   },
 
   artikel: {
-    marginTop: "5%",
     alignSelf: "center",
     width: "90%",
+    flex: 6,
   },
 
   center: {
@@ -159,6 +186,7 @@ const styles = StyleSheet.create({
   },
 
   body: {
+    flex: 3,
     alignSelf: "center",
     width: "100%",
   },
@@ -185,6 +213,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     marginTop: "10%",
+    flex: 1,
     alignSelf: "center",
     width: "90%",
     alignItems: "center",
