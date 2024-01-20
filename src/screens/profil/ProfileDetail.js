@@ -105,7 +105,9 @@ export default function ProfileDetail({ navigation }) {
               </View>
             </View>
             <View style={{flex: 1, justifyContent:'flex-end', marginBottom:'10%'}}>
-              <PrimaryButton title="Edit Profile" />
+              <PrimaryButton title="Edit Profile" onPress={() => {
+                navigation.navigate('EditProfile')
+              }}/>
             </View>
           </View>
         </View>
