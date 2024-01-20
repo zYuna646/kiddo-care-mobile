@@ -11,9 +11,10 @@ export default function StatusCard({
   status,
   no_ktp,
   index,
+  onPress
 }) {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <LinearGradient
         style={styles.card}
         colors={["#63C7FF", "#00A3FF"]}

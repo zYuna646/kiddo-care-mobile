@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import IconMenuButton from "./IconMenuButton";
 
-export default function ArrowButton({onPress, Text}) {
+export default function ArrowButton({ onPress, title }) {
   return (
     <View>
-      <View style={{flexDirection:'row', alignSelf:'flex-start'}}>
+      <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
         <IconMenuButton
           icon="arrow-left"
           size={20}
@@ -23,7 +23,7 @@ export default function ArrowButton({onPress, Text}) {
             marginLeft: "5%",
           }}
         >
-          {Text}
+          {title}
         </Text>
       </View>
     </View>

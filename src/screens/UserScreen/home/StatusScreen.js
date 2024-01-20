@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import ArtikelCard from "../../../component/Card/ArtikelCard";
 import StatusCard from "../../../component/Card/StatusCard";
 
-export default function StatusScreen() {
+export default function StatusScreen({navigation}) {
   const [selectedId, setselectedId] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -86,7 +86,6 @@ export default function StatusScreen() {
           alignSelf: "center",
         }}
       >
-        <Text>asd</Text>
         <FlatList
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -101,6 +100,7 @@ export default function StatusScreen() {
               id={item.id}
               status={item.status}
               index={index}
+              onPress={() => {navigation.navigate('StatusDetail', {data: item, index: index})}}
             />
           )}
           keyExtractor={(item) => item.id.toString()}

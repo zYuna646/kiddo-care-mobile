@@ -16,6 +16,7 @@ import ProfilScreen from "./src/screens/UserScreen/profil/ProfilScreen";
 import ProfileDetail from "./src/screens/UserScreen/profil/ProfileDetail";
 import InfoAplikasi from "./src/screens/UserScreen/profil/InfoAplikasi";
 import EditProfile from "./src/screens/UserScreen/profil/EditProfile";
+import StatusDetail from './src/screens/UserScreen/home/StatusDetail'
 
 
 export default function App() {
@@ -93,6 +94,11 @@ export default function App() {
           <Stack.Screen
             name="InfoAplikasi"
             component={InfoAplikasi}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="StatusDetail"
+            component={StatusDetail}
             options={{ headerShown: false }}
           />
            <Stack.Screen
