@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getData } from "../../utils/StorageData";
+import { getData } from "../../../utils/StorageData";
 import * as SplashScreen from "expo-splash-screen";
-import IconMenuButton from "../../component/Button/IconMenuButton";
-import IconGraph from "../../component/Graph/IconGraph";
-import PrimaryButton from "../../component/Button/PrimaryButton";
-import LoadingIndicator from "../../component/LoadingIndicator";
+import IconMenuButton from "../../../component/Button/IconMenuButton";
+import IconGraph from "../../../component/Graph/IconGraph";
+import PrimaryButton from "../../../component/Button/PrimaryButton";
+import LoadingIndicator from "../../../component/LoadingIndicator";
 
 export default function ProfileDetail({ navigation }) {
   const [user, setUser] = useState(null);

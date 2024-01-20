@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import IconMenuButton from "../../component/Button/IconMenuButton";
+import IconMenuButton from "../../../component/Button/IconMenuButton";
 
 export default function InfoAplikasi({ navigation }) {
   return (

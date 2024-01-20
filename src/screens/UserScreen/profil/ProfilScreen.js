@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
-import IconMenuButton from "../../component/Button/IconMenuButton";
-import IconGraph from "../../component/Graph/IconGraph";
-import { getData } from "../../utils/StorageData";
-import PrimaryButton from "../../component/Button/PrimaryButton";
+import IconMenuButton from "../../../component/Button/IconMenuButton";
+import IconGraph from "../../../component/Graph/IconGraph";
+import { getData } from "../../../utils/StorageData";
+import PrimaryButton from "../../../component/Button/PrimaryButton";
 import * as SplashScreen from "expo-splash-screen";
-import LogOutButton from "../../component/Button/LogOutButton";
-import LoadingIndicator from "../../component/LoadingIndicator";
+import LogOutButton from "../../../component/Button/LogOutButton";
+import LoadingIndicator from "../../../component/LoadingIndicator";
 
 export default function ProfilScreen({ navigation }) {
   const [user, setUser] = useState(null);

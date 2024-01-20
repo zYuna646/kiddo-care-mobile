@@ -9,11 +9,11 @@ import {
 } from "react-native";
 import React from "react";
 import { useEffect, useState } from "react";
-import { getData, removeData } from "../../utils/StorageData";
-import IconButton from "../../component/Button/IconButton";
-import IconMenuButton from "../../component/Button/IconMenuButton";
-import TextButton from "../../component/Button/TextButton";
-import ArtikelCard from "../../component/Card/ArtikelCard";
+import { getData, removeData } from "../../../utils/StorageData";
+import IconButton from "../../../component/Button/IconButton";
+import IconMenuButton from "../../../component/Button/IconMenuButton";
+import TextButton from "../../../component/Button/TextButton";
+import ArtikelCard from "../../../component/Card/ArtikelCard";
 
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState(null);
