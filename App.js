@@ -4,20 +4,21 @@ import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./src/screens/UserScreen/home/HomeScreen";
-import SignUpScreenUser from "./src/screens/UserScreen/singIn/SingupScreenUser"
+import SignUpScreenUser from "./src/screens/UserScreen/singIn/SingupScreenUser";
 import SignUpScreenPetugas from "./src/screens/PetugasScreen/SingupScreenPetugas";
 import SignInScreen from "./src/screens/UserScreen/singIn/SignInScreen";
 import VerifikasiOTPScreen from "./src/screens/verifikasi/VerifikasiOTPScreen";
 import { getData, removeData } from "./src/utils/StorageData";
 import { useEffect, useState } from "react";
-import Toast from 'react-native-toast-message';
+import Toast from "react-native-toast-message";
 import TabUser from "./src/screens/UserScreen/TabUser";
 import ProfilScreen from "./src/screens/UserScreen/profil/ProfilScreen";
 import ProfileDetail from "./src/screens/UserScreen/profil/ProfileDetail";
 import InfoAplikasi from "./src/screens/UserScreen/profil/InfoAplikasi";
 import EditProfile from "./src/screens/UserScreen/profil/EditProfile";
-import StatusDetail from './src/screens/UserScreen/home/StatusDetail'
-
+import StatusDetail from "./src/screens/UserScreen/home/StatusDetail";
+import NotifikasiScreen from "./src/screens/UserScreen/home/NotifikasiScreen";
+import SearchScreen from "./src/screens/UserScreen/home/SearchScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -28,7 +29,6 @@ export default function App() {
   });
 
   const [user, setUser] = useState(null);
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +80,7 @@ export default function App() {
             component={EditProfile}
             options={{ headerShown: false }}
           />
-          
+
           <Stack.Screen
             name="VerifikasiOTP"
             component={VerifikasiOTPScreen}
@@ -96,12 +96,22 @@ export default function App() {
             component={InfoAplikasi}
             options={{ headerShown: false }}
           />
-           <Stack.Screen
+          <Stack.Screen
+            name="Notifikasi"
+            component={NotifikasiScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="StatusDetail"
             component={StatusDetail}
             options={{ headerShown: false }}
           />
-           <Stack.Screen
+          <Stack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="Profile"
             component={ProfilScreen}
             options={{ headerShown: false }}

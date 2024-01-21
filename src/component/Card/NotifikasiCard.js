@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function NotificationScreen() {
+export default function NotifikasiCard() {
   return (
     <View>
-      <Text>NotificationScreen</Text>
+      <Text>NotifikasiCard</Text>
     </View>
   )
 }

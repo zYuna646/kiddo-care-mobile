@@ -49,8 +49,8 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.logo}>KiddoCare</Text>
           </View>
           <View style={styles.menu}>
-            <IconMenuButton icon="search" size={22} />
-            <IconMenuButton icon="bell-o" size={22} />
+            <IconMenuButton icon="search" size={22} onPress={() => {navigation.navigate("Search")}}/>
+            <IconMenuButton icon="bell-o" size={22} onPress={() => {navigation.navigate("Notifikasi")}}/>
             <IconMenuButton icon="user-circle-o" size={22} onPress={() => {navigation.navigate("Profile")}}/>
           </View>
         </View>
@@ -84,7 +84,7 @@ export default function HomeScreen({ navigation }) {
               >
                 Edukasi
               </Text>
-              <TextButton title="Lainnya" size={14} />
+              <TextButton title="Lainnya" size={14} onPress={() => {navigation.navigate("Search")}} />
             </View>
             <View style={{ height: 35, }}>
               <ScrollView style={{ width: 350, height: 10 }} horizontal={true}>
