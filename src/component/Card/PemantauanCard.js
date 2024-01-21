@@ -44,12 +44,12 @@ export default function PemantauanCard({
           <Image
             source={
               status
-                ? require("../../../assets/img/StatusYes.png")
-                : require("../../../assets/img/StatusNo.png")
+                ? require("../../../assets/img/PemantauanStunting.png")
+                : require("../../../assets/img/PemantauanStunting.png")
             }
           />
-          <Text style={[styles.cardDetail, { textAlign: "center" }]}>
-            {status ? "Sudah Mengukur Bulan Ini" : "Belum Mengukur Bulan Ini"}
+          <Text style={{ textAlign: "center", fontFamily:'Poppins-Bold', fontSize:8, color:'white' }}>
+            {status ? "Stunting" : "Belum Mengukur Bulan Ini"}
           </Text>
         </View>
       </LinearGradient>
