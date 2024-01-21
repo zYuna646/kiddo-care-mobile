@@ -50,6 +50,7 @@ export default function SignInScreen({ navigation }) {
         password: password,
       });
       if (data != null) {
+        
         Toast.show({
           type: "success",
           text1: "Masuk Akun",
@@ -66,6 +67,7 @@ export default function SignInScreen({ navigation }) {
         text1: "Masuk Akun",
         text2: "Email/Nomor Telepon atau Password Salah",
       });
+      
     }
   };
 

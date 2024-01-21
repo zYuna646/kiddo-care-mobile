@@ -40,6 +40,8 @@ export default function HomeScreen({ navigation }) {
           navigation.replace("SingIn");
         }
 
+        console.log(userData);
+
         setUser(userData);
       } catch (error) {
         console.error("Error fetching user data:", error.message);
