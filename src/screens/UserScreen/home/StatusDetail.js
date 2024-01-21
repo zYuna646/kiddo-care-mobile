@@ -1,10 +1,20 @@
+import React, { useState, useEffect, useRef } from "react";
 import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
-import React, { useState } from "react";
 import ArrowButton from "../../../component/Button/ArrowButton";
-import { PieChart } from "react-native-chart-kit";
+import * as Progress from "react-native-progress";
 
 export default function StatusDetail({ navigation, route }) {
   const [data, setData] = useState(route.params.data);
+  const [progressValue, setProgressValue] = useState(0.4);
+  const progressRef = useRef(null);
+
+  useEffect(() => {
+    if (progressRef.current) {
+      setTimeout(() => {
+        setProgressValue(0.4);
+      }, 100);
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -34,6 +44,7 @@ export default function StatusDetail({ navigation, route }) {
               height: 400,
               backgroundColor: "rgba(128, 128, 128, 0.5)",
               borderRadius: 10,
+              shadowColor: "rgba(0, 0, 0, 0.5)",
             }}
           >
             <View style={{ flexDirection: "row", marginTop: "5%" }}>
@@ -67,7 +78,7 @@ export default function StatusDetail({ navigation, route }) {
                   source={
                     data.status
                       ? require("../../../../assets/img/StatusYes.png")
-                      : require(".../../../../assets/img/StatusNo.png")
+                      : require("../../../../assets/img/StatusNo.png")
                   }
                 />
                 <Text style={[styles.cardDetail, { textAlign: "center" }]}>
@@ -77,13 +88,109 @@ export default function StatusDetail({ navigation, route }) {
                 </Text>
               </View>
             </View>
+            <View style={{ alignSelf: "center" }}>
+              <Progress.Circle
+                size={120}
+                progress={progressValue}
+                showsText={true}
+                textStyle={{ color: "black", fontFamily: "Poppins-Bold" }}
+                thickness={25}
+                style={{ alignSelf: "center", marginTop: "10%" }}
+                unfilledColor="#FF0000"
+                indeterminate={false}
+                borderColor="rgba(128, 128, 128, 0.5)"
+                color="#99FF97"
+                ref={progressRef}
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  alignSelf: "center",
+                  fontFamily: "Poppins-Bold",
+                  fontSize: 24,
+                  marginTop: "5%",
+                }}
+              >
+                Anak Berpotensi Stunting
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              marginTop: "5%",
+              backgroundColor: "#E1F4FC",
+              borderRadius: 10,
+              shadowColor: "rgba(0, 0, 0, 0.5)",
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                marginTop: "5%",
+                fontFamily: "Poppins-Bold",
+                fontSize: 16,
+              }}
+            >
+              PERAWATAN BAYI USIA 3-6 BULAN
+            </Text>
+            <View
+              style={{
+                marginTop: "5%",
+                flexDirection: "row",
+                alignSelf: "flex-end",
+              }}
+            >
+              <View
+                style={{
+                  width: 46,
+                  height: 18,
+                  backgroundColor: "#99FF97",
+                  borderTopLeftRadius: 5,
+                  borderBottomLeftRadius: 5,
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "Poppins-Bold",
+                    fontSize: 12,
+                  }}
+                >
+                  YA
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: 46,
+                  height: 18,
+                  backgroundColor: "#FF0000",
+                  borderTopRightRadius: 5,
+                  borderBottomRightRadius: 5,
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "Poppins-Bold",
+                    fontSize: 12,
+                  }}
+                >
+                  TIDAK
+                </Text>
+              </View>
+            </View>
+            <View style={{marginTop:'5%', flexDirection:'row'}}>
+
+            </View>
           </View>
         </ScrollView>
       </View>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
