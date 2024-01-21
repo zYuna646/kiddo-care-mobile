@@ -1,9 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import React from "react";
 
-export default function ArtikelCard({ image, title }) {
+export default function ArtikelCard({ image, title, onPress }) {
   return (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity onPress={onPress}>
       <View
         style={{
           width: 171,

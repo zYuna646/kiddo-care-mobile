@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import ArrowButton from "../../../component/Button/ArrowButton";
+import NotifikasiCard from "../../../component/Card/NotifikasiCard";
 
 export default function NotifikasiScreen({ navigation }) {
   return (
@@ -16,10 +17,12 @@ export default function NotifikasiScreen({ navigation }) {
 
       <View style={styles.container}>
         <Text style={styles.containerText}>Belum Dibaca</Text>
+        <NotifikasiCard title="Anak Anda Stunting Selamat" date="2 jan 14:00" />
       </View>
 
       <View style={styles.container}>
         <Text style={styles.containerText}>Telah Dibaca</Text>
+        <NotifikasiCard title="Anak Anda Stunting Selamat" date="2 jan 14:00" />
       </View>
     </View>
   );
@@ -33,6 +36,6 @@ const styles = StyleSheet.create({
   containerText: {
     fontFamily: "Poppins-Light",
     fontSize: 12,
-    alignSelf:'flex-start'
+    alignSelf: "flex-start",
   },
 });

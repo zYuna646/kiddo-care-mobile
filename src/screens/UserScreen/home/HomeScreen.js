@@ -5,6 +5,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  RefreshControl,
   ScrollView,
 } from "react-native";
 import React from "react";
@@ -17,6 +18,18 @@ import ArtikelCard from "../../../component/Card/ArtikelCard";
 
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    // Your refresh logic here
+    // For example, you might fetch new data from an API
+    setRefreshing(true);
+
+    // Simulating a network request
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,9 +62,27 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.logo}>KiddoCare</Text>
           </View>
           <View style={styles.menu}>
-            <IconMenuButton icon="search" size={22} onPress={() => {navigation.navigate("Search")}}/>
-            <IconMenuButton icon="bell-o" size={22} onPress={() => {navigation.navigate("Notifikasi")}}/>
-            <IconMenuButton icon="user-circle-o" size={22} onPress={() => {navigation.navigate("Profile")}}/>
+            <IconMenuButton
+              icon="search"
+              size={22}
+              onPress={() => {
+                navigation.navigate("Search");
+              }}
+            />
+            <IconMenuButton
+              icon="bell-o"
+              size={22}
+              onPress={() => {
+                navigation.navigate("Notifikasi");
+              }}
+            />
+            <IconMenuButton
+              icon="user-circle-o"
+              size={22}
+              onPress={() => {
+                navigation.navigate("Profile");
+              }}
+            />
           </View>
         </View>
       </View>
@@ -84,9 +115,15 @@ export default function HomeScreen({ navigation }) {
               >
                 Edukasi
               </Text>
-              <TextButton title="Lainnya" size={14} onPress={() => {navigation.navigate("Search")}} />
+              <TextButton
+                title="Lainnya"
+                size={14}
+                onPress={() => {
+                  navigation.navigate("Search");
+                }}
+              />
             </View>
-            <View style={{ height: 35, }}>
+            <View style={{ height: 35 }}>
               <ScrollView style={{ width: 350, height: 10 }} horizontal={true}>
                 {data.map((item) => (
                   <TouchableOpacity
@@ -123,7 +160,12 @@ export default function HomeScreen({ navigation }) {
         </View>
       </View>
       <View style={styles.artikel}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
           <View
             style={{ flexDirection: "row", marginTop: 10, alignSelf: "center" }}
           >
