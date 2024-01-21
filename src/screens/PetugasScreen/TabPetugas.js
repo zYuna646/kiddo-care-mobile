@@ -2,13 +2,17 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons"; // Import the necessary icon libraries
+import HomePetugas from "./Home/HomePetugas";
+import PemantauanPetugas from "./Home/PemantauanPetugas";
+import KlasifikasiScreen from "./Home/KlasifikasiScreen";
+import LaporanScreen from "./Home/LaporanScreen";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabPetugas() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomePetugas"
       screenOptions={{
         activeTintColor: "#00A3FF", // Change the color of the active tab
         inactiveTintColor: "gray", // Change the color of inactive tabs
@@ -17,8 +21,8 @@ export default function TabPetugas() {
      
     >
       <Tab.Screen
-        name="HomeUser"
-        component={HomeScreen}
+        name="HomePetugas"
+        component={HomePetugas}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
@@ -28,8 +32,19 @@ export default function TabPetugas() {
         }}
       />
       <Tab.Screen
-        name="Status"
-        component={StatusScreen}
+        name="Klasifikasi"
+        component={KlasifikasiScreen}
+        options={{
+          tabBarLabel: "Status",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="circle-o" size={size} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+       <Tab.Screen
+        name="Laporan"
+        component={LaporanScreen}
         options={{
           tabBarLabel: "Status",
           tabBarIcon: ({ color, size }) => (
@@ -39,8 +54,8 @@ export default function TabPetugas() {
         }}
       />
       <Tab.Screen
-        name="Pemantauan"
-        component={PemantauanScreen}
+        name="PemantauanPetugas"
+        component={PemantauanPetugas}
         options={{
           tabBarLabel: "Pemantauan",
           tabBarIcon: ({ color, size }) => (
