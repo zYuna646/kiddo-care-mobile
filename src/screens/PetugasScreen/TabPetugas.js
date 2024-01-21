@@ -2,9 +2,6 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign, FontAwesome, Ionicons } from "@expo/vector-icons"; // Import the necessary icon libraries
-import HomeScreen from "./home/HomeScreen";
-import StatusScreen from "./home/StatusScreen";
-import PemantauanScreen from "./home/PemantauanScreen";
 
 const Tab = createBottomTabNavigator();
 
