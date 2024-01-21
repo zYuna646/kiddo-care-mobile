@@ -1,12 +1,29 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import ArrowButton from "../../../component/Button/ArrowButton";
 import * as Progress from "react-native-progress";
+import StatusDetailCard from "../../../component/Card/StatusDetailCard";
 
 export default function StatusDetail({ navigation, route }) {
   const [data, setData] = useState(route.params.data);
   const [progressValue, setProgressValue] = useState(0.4);
   const progressRef = useRef(null);
+
+  const radioButtons = useMemo(
+    () => [
+      {
+        id: "1",
+        value: "Yes",
+      },
+      {
+        id: "2",
+        value: "No",
+      },
+    ],
+    []
+  );
+
+  const [selectedId, setSelectedId] = useState();
 
   useEffect(() => {
     if (progressRef.current) {
@@ -139,6 +156,7 @@ export default function StatusDetail({ navigation, route }) {
                 marginTop: "5%",
                 flexDirection: "row",
                 alignSelf: "flex-end",
+                marginRight: "5%",
               }}
             >
               <View
@@ -182,8 +200,9 @@ export default function StatusDetail({ navigation, route }) {
                 </Text>
               </View>
             </View>
-            <View style={{marginTop:'5%', flexDirection:'row'}}>
-
+            <View style={{ alignSelf: "center", width: "90%" }}>
+              <StatusDetailCard radioButton={radioButtons} setSelected={setSelectedId} selected={selectedId}/>
+              <StatusDetailCard radioButton={radioButtons} setSelected={setSelectedId} selected={selectedId}/>
             </View>
           </View>
         </ScrollView>
