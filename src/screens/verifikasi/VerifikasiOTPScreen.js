@@ -1,9 +1,22 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, {useState} from "react";
 import TextButton from "../../component/Button/TextButton";
+import * as SMS from 'expo-sms';
 
 export default function VerifikasiOTPScreen({navigation, route}) {
-  console.log(route.params.data);
+
+  const [data, setData] = useState(route.params.data);
+
+  const checkSMS = async () => {
+    const isAvailable = await SMS.isAvailableAsync();
+    if (isAvailable) {
+      // do your SMS stuff here
+    } else {
+      // misfortune... there's no SMS available on this device
+    }
+  }
+
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>

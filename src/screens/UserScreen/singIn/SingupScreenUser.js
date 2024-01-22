@@ -17,15 +17,19 @@ import Checkbox from "expo-checkbox";
 import Toast from "react-native-toast-message";
 import ApiRequest from "../../../utils/ApiRequest";
 
-export default function SignUpScreenUser({navigation}) {
+export default function SignUpScreenUser({ navigation }) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [ktp, setKTP] = useState("");
+  const [kk, setKK] = useState("");
   const [number, setNumber] = useState("");
   const [confirm, setConfirm] = useState("");
   const [password, setPassword] = useState("");
   const [isSelected, setSelected] = useState(false);
 
   const [isValidName, setValidName] = useState(false);
+  const [isValidKTP, setValidKTP] = useState(false);
+  const [isValidKK, setValidKK] = useState(false);
   const [isValidEmail, setValidEmail] = useState(false);
   const [isValidPhone, setValidPhone] = useState(false);
   const [isValidPass, setValidPass] = useState(false);
@@ -38,6 +42,8 @@ export default function SignUpScreenUser({navigation}) {
     setValidEmail(emailRegex.test(email));
     setValidPhone(phoneRegex.test(number) && number.length >= 10);
     setValidName(!phoneRegex.test(name) && name.length >= 1);
+    setValidKTP(!phoneRegex.test(ktp) && ktp.length >= 1);
+    setValidKK(!phoneRegex.test(kk) && kk.length >= 1);
     setValidPass(password.length > 6);
     setValidConfirmPass(confirm.length > 6 && confirm === password);
   };
@@ -49,10 +55,19 @@ export default function SignUpScreenUser({navigation}) {
         phone: number,
         username: name,
         password: password,
+        ktp: ktp,
+        kk: kk,
+        role: 'masyarakat',
       };
-      const data = await ApiRequest("users/check", "POST", registerData);
+      const data = await ApiRequest("users/check", "POST", {
+        email: email,
+        password: password,
+        phone: phone,
+        username: name,
+      });
+      
       if (data.data) {
-        navigation.navigate('VerifikasiOTP', {data: registerData})
+        navigation.navigate("VerifikasiOTP", { data: registerData });
       }
     } catch (error) {
       Toast.show({
@@ -65,7 +80,7 @@ export default function SignUpScreenUser({navigation}) {
 
   useEffect(() => {
     validateForm();
-  }, [email, password, name, confirm, password]);
+  }, [email, password, name, confirm, password, kk, ktp]);
 
   return (
     <View style={styles.container}>
@@ -88,6 +103,22 @@ export default function SignUpScreenUser({navigation}) {
               title="Nama Lengkap"
               onChangeText={setName}
               value={name}
+            />
+          </View>
+          <View style={{ marginTop: "5%" }}>
+            <InputForm
+              icon="user"
+              title="Nomor KTP"
+              onChangeText={setKTP}
+              value={ktp}
+            />
+          </View>
+          <View style={{ marginTop: "5%" }}>
+            <InputForm
+              icon="user"
+              title="Nomor KK"
+              onChangeText={setKK}
+              value={kk}
             />
           </View>
           <View style={{ marginTop: "5%" }}>
@@ -186,7 +217,7 @@ export default function SignUpScreenUser({navigation}) {
                   isValidName &&
                   isValidConfirmPass &&
                   isValidPhone &&
-                  isSelected
+                  isSelected && isValidKTP && isValidKK
                 )
               }
             />
@@ -194,9 +225,7 @@ export default function SignUpScreenUser({navigation}) {
           <View style={{ marginTop: "5%" }}>
             <CenterLineText title="Atau" />
           </View>
-          <View style={{ marginTop: "5%" }}>
-            <GoogleButton title="Masuk menggunakan Google" />
-          </View>
+         
           <View
             style={{
               marginTop: "5%",
@@ -208,7 +237,7 @@ export default function SignUpScreenUser({navigation}) {
             <Text style={{ color: "#BDBDBD", fontSize: 12, marginRight: 5 }}>
               SUdah memiliki akun?
             </Text>
-            <TextButton title="Masuk Akun" />
+            <TextButton title="Masuk Akun" onPress={() => {navigation.navigate('SingIn')}}/>
           </View>
         </ScrollView>
       </View>

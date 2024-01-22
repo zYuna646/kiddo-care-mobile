@@ -135,25 +135,26 @@ export default function ProfilScreen({ navigation }) {
               title="Log Out"
               onPress={async () => {
                 try {
-                 
-                  const response = await ApiRequest("users/logout", "DELETE", null, {
-                    Authorization: user.token
-                  });
-                  
+                  const response = await ApiRequest(
+                    "users/logout",
+                    "DELETE",
+                    null,
+                    {
+                      Authorization: user.token,
+                    }
+                  );
+
 
                   if (response != null) {
-                    await removeData("user");
-
-
-
                     Toast.show({
                       type: "success",
                       text1: "Log Out",
                       text2: "Berhasil Keluar",
                     });
 
-                    navigation.navigate("Home");
+                    await removeData("user");
 
+                    navigation.navigate("Home");
                   } else {
                     // Handle unexpected response status
                     console.error(
@@ -168,7 +169,10 @@ export default function ProfilScreen({ navigation }) {
                   }
                 } catch (error) {
                   // Log the complete error response for debugging purposes
-                  console.error("Logout Error:", error.response.data.errors.message);
+                  console.error(
+                    "Logout Error:",
+                    error.response.data.errors.message
+                  );
 
                   Toast.show({
                     type: "error",

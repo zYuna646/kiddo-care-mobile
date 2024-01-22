@@ -147,9 +147,7 @@ export default function SignInScreen({ navigation }) {
           <View style={{ marginTop: "5%" }}>
             <CenterLineText title="Atau" />
           </View>
-          <View style={{ marginTop: "5%" }}>
-            <GoogleButton title="Masuk menggunakan Google" />
-          </View>
+         
           <View
             style={{
               marginTop: "5%",
