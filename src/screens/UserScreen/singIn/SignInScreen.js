@@ -57,6 +57,8 @@ export default function SignInScreen({ navigation }) {
           text2: "Berhasil Masuk",
         });
 
+        console.log(data);
+
         await storeData("user", data.data).then(() => {
           navigation.navigate("Home");
         });

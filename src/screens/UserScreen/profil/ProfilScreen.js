@@ -12,20 +12,20 @@ import { storeData, removeData } from "../../../utils/StorageData";
 import Toast from "react-native-toast-message";
 
 export default function ProfilScreen({ navigation }) {
-  const [user, setUser] = useState(null);
 
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userData = await getData("user");
-        setUser(userData);
+        setUser(userData.user);
       } catch (error) {
         console.error("Error fetching user data:", error.message);
       }
     };
 
     fetchData();
-  }, [user]);
+  }, []);
 
   return (
     <>
@@ -143,7 +143,6 @@ export default function ProfilScreen({ navigation }) {
                       Authorization: user.token,
                     }
                   );
-
 
                   if (response != null) {
                     Toast.show({

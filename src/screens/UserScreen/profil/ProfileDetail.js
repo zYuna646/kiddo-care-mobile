@@ -6,15 +6,29 @@ import IconMenuButton from "../../../component/Button/IconMenuButton";
 import IconGraph from "../../../component/Graph/IconGraph";
 import PrimaryButton from "../../../component/Button/PrimaryButton";
 import LoadingIndicator from "../../../component/LoadingIndicator";
+import ApiRequest from "../../../utils/ApiRequest";
 
 export default function ProfileDetail({ navigation }) {
   const [user, setUser] = useState(null);
-
+  const [userDetail, setUserDetail] = useState(null);
+  const [puskesmas, setPuskesmas] = useState(null)
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userData = await getData("user");
-        setUser(userData);
+      
+        setUser(userData.user)
+        setUserDetail(userData.masyarakat)
+
+        const data = await ApiRequest("puskesmas/id", "POST", {
+          id: userData.masyarakat.puskesmas_id
+        });
+
+
+        setPuskesmas(data.puskesmas)
+
+
+
       } catch (error) {
         console.error("Error fetching user data:", error.message);
       }
@@ -25,7 +39,7 @@ export default function ProfileDetail({ navigation }) {
 
   return (
     <>
-      {user ? (
+      {user && userDetail && puskesmas ? (
         <View style={styles.container}>
           <View style={styles.top}>
             <View style={styles.arrow}>
@@ -93,21 +107,38 @@ export default function ProfileDetail({ navigation }) {
             <View style={styles.ProfileDetail}>
               <View>
                 <Text style={styles.detailHeader}>Jenis Kelamin</Text>
-                <Text style={styles.detailBold}>Perempuan</Text>
+                <Text style={styles.detailBold}>{userDetail.jenis_kelamin}</Text>
               </View>
               <View>
                 <Text style={styles.detailHeader}>No. Telepon</Text>
-                <Text style={styles.detailBold}>0812345678</Text>
+                <Text style={styles.detailBold}>{user.phone}</Text>
               </View>
               <View>
-                <Text style={styles.detailHeader}>Alamat</Text>
-                <Text style={styles.detailBold}>1</Text>
+                <Text style={styles.detailHeader}>NIK</Text>
+                <Text style={styles.detailBold}>{userDetail.nik}</Text>
+              </View>
+              <View>
+                <Text style={styles.detailHeader}>NKK</Text>
+                <Text style={styles.detailBold}>{userDetail.nkk}</Text>
+              </View>
+              <View>
+                <Text style={styles.detailHeader}>Puskesmas</Text>
+                <Text style={styles.detailBold}>{puskesmas.name}</Text>
               </View>
             </View>
-            <View style={{flex: 1, justifyContent:'flex-end', marginBottom:'10%'}}>
-              <PrimaryButton title="Edit Profile" onPress={() => {
-                navigation.navigate('EditProfile')
-              }}/>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                marginBottom: "10%",
+              }}
+            >
+              <PrimaryButton
+                title="Edit Profile"
+                onPress={() => {
+                  navigation.navigate("EditProfile");
+                }}
+              />
             </View>
           </View>
         </View>

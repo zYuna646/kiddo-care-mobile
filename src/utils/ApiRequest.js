@@ -3,7 +3,6 @@ import axios from "axios";
 
 const ApiRequest = async (endpoint, method = "GET", body = null, headers = {}, params={}) => {
   const url = `${BASE_URL}/${endpoint}`;
-  console.log(body);
   try {
     const response = await axios({
       url,
@@ -18,6 +17,7 @@ const ApiRequest = async (endpoint, method = "GET", body = null, headers = {}, p
       },
     });
 
+
     if (!(response.status >= 200 && response.status < 300)) {
       if (response.data && response.data.errors) {
         const errorMessage = response.data.errors.message;
@@ -26,7 +26,7 @@ const ApiRequest = async (endpoint, method = "GET", body = null, headers = {}, p
         );
         console.log(response);
 
-        throw new Error(errorMessage);
+        throw new Error(errorMessage); 
       } else {
         console.log(response);
         throw new Error(`HTTP error! Status: ${response.status}`);
