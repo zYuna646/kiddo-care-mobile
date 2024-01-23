@@ -1,7 +1,7 @@
-const BASE_URL = "https://041b-103-26-12-152.ngrok-free.app/api";
+const BASE_URL = "https://accb-103-26-14-144.ngrok-free.app/api";
 import axios from "axios";
 
-const ApiRequest = async (endpoint, method = "GET", body = null, headers = {}) => {
+const ApiRequest = async (endpoint, method = "GET", body = null, headers = {}, params={}) => {
   const url = `${BASE_URL}/${endpoint}`;
   console.log(body);
   try {
@@ -13,6 +13,9 @@ const ApiRequest = async (endpoint, method = "GET", body = null, headers = {}) =
         ...headers,
       },
       data: body ? JSON.stringify(body) : null,
+      params: {
+        ...params,
+      },
     });
 
     if (!(response.status >= 200 && response.status < 300)) {

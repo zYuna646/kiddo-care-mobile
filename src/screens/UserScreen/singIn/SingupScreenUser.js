@@ -18,11 +18,23 @@ import Toast from "react-native-toast-message";
 import ApiRequest from "../../../utils/ApiRequest";
 import { Picker } from "@react-native-picker/picker";
 import LoadingIndicator from "../../../component/LoadingIndicator";
+import WilayahApi, {
+  fetchKabupaten,
+  fetchKecamatan,
+} from "../../../utils/WilayahApiRequest";
 
 export default function SignUpScreenUser({ navigation }) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [ktp, setKTP] = useState("");
+  const [provinsi, setProvinsi] = useState(null);
+  const [kabupaten, setKabupaten] = useState(null);
+  const [kecamatan, setKecamatan] = useState(null);
+
+  const [fkecamatan, setfKecamatan] = useState(null);
+  const [fkabupaten, setfKabupaten] = useState(null);
+  const [fprovinsi, setfProvinsi] = useState(null);
+  const [filteredPuskesmas, setFilteredPuskesmas] = useState(null);
 
   const [puskesmas, setPuskesmas] = useState(null);
 
@@ -37,7 +49,6 @@ export default function SignUpScreenUser({ navigation }) {
   const [selectedProvinsi, setSelectedProvinsi] = useState(null);
   const [selectedKabupaten, setSelectedKabupaten] = useState(null);
   const [selectedKecamatan, setSelectedKecamatan] = useState(null);
-
 
   const [isValidName, setValidName] = useState(false);
   const [isValidKTP, setValidKTP] = useState(false);
@@ -71,6 +82,7 @@ export default function SignUpScreenUser({ navigation }) {
         ktp: ktp,
         kk: kk,
         role: "masyarakat",
+        puskesmas_id: selectedPuskesmas
       };
 
       const data_check = {
@@ -106,9 +118,13 @@ export default function SignUpScreenUser({ navigation }) {
     const fetchData = async () => {
       try {
         const data = await ApiRequest("puskesmas", "GET");
+        const provinsi = await WilayahApi("provinsi", "GET");
         if (data != null) {
-          console.log(data);
-          setPuskesmas(data);
+          setPuskesmas(data.puskesmas);
+        }
+
+        if (provinsi != null) {
+          setProvinsi(provinsi.value);
         }
       } catch (error) {
         console.error(error);
@@ -117,6 +133,10 @@ export default function SignUpScreenUser({ navigation }) {
 
     fetchData(); // Call the async function here
   }, []);
+
+  useEffect(() => {
+    validateForm();
+  }, [email, password, name, confirm, number, isSelected, ktp, kk, selectedJK, selectedPuskesmas]);
 
   const pickerRef = useRef();
 
@@ -128,10 +148,9 @@ export default function SignUpScreenUser({ navigation }) {
     pickerRef.current.blur();
   }
 
-
   return (
     <>
-      {puskesmas != null ? (
+      {puskesmas != null && provinsi != null ? (
         <View style={styles.container}>
           <View style={styles.header}>
             <View style={styles.headerContent}>
@@ -197,25 +216,147 @@ export default function SignUpScreenUser({ navigation }) {
                   </Picker>
                 </View>
               </View>
+
               <View style={{ marginTop: "5%" }}>
-                <Text style={{ fontFamily: "Poppins-Bold" }}>
-                  Probinsi
-                </Text>
+                <Text style={{ fontFamily: "Poppins-Bold" }}>Provinsi</Text>
                 <View
                   style={{ borderWidth: 1, borderRadius: 10, marginTop: "5%" }}
                 >
                   <Picker
-                    ref={pickerRef}
-                    selectedValue={selectedJK} // Use selectedJK instead of setSelected
-                    onValueChange={(itemValue, itemIndex) =>
-                      setSelectedJK(itemValue)
-                    }
+                    selectedValue={selectedProvinsi}
+                    onValueChange={async (itemValue, itemIndex) => {
+                      const kabupaten = await fetchKabupaten(itemValue);
+
+                      if (kabupaten != null) {
+                        setKabupaten(kabupaten.value);
+                      }
+                      setfProvinsi(provinsi[itemIndex].name);
+                      setSelectedProvinsi(itemValue);
+                      setSelectedKabupaten(null);
+                      setSelectedKecamatan(null);
+                    }}
                   >
-                    <Picker.Item label="Laki-Laki" value="Laki-Laki" />
-                    <Picker.Item label="Perempuan" value="Perempuan" />
+                    <Picker.Item label="Pilih Provinsi" value={null} />
+
+                    {provinsi.map((province) => (
+                      <Picker.Item
+                        key={province.id}
+                        label={province.name}
+                        value={province.id}
+                      />
+                    ))}
                   </Picker>
                 </View>
               </View>
+              {kabupaten != null ? (
+                <View style={{ marginTop: "5%" }}>
+                  <Text style={{ fontFamily: "Poppins-Bold" }}>Kabupaten</Text>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      marginTop: "5%",
+                    }}
+                  >
+                    <Picker
+                      selectedValue={selectedKabupaten} // Use selectedJK instead of setSelected
+                      onValueChange={async (itemValue, itemIndex) => {
+                        const kecamatan = await fetchKecamatan(itemValue);
+
+                        if (kecamatan != null) {
+                          setKecamatan(kecamatan.value);
+                        }
+                        setfKabupaten(kabupaten[itemIndex].name);
+                        setSelectedKabupaten(itemValue);
+                        setSelectedKecamatan(null);
+                      }}
+                    >
+                      <Picker.Item label="Pilih Kabupaten" value={null} />
+
+                      {kabupaten.map((kabupaten) => (
+                        <Picker.Item
+                          key={kabupaten.id}
+                          label={kabupaten.name}
+                          value={kabupaten.id}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+                </View>
+              ) : (
+                <></>
+              )}
+
+              {kecamatan != null ? (
+                <View style={{ marginTop: "5%" }}>
+                  <Text style={{ fontFamily: "Poppins-Bold" }}>Kecamatan</Text>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      marginTop: "5%",
+                    }}
+                  >
+                    <Picker
+                      selectedValue={selectedKecamatan} // Use selectedJK instead of setSelected
+                      onValueChange={(itemValue, itemIndex) => {
+                        const filteredPuskesmas = puskesmas.filter(
+                          (puskes) =>
+                            puskes.kecamatan === kecamatan[itemIndex - 1].name
+                        );
+                        setFilteredPuskesmas(filteredPuskesmas);
+                        setfKecamatan(kecamatan[itemIndex - 1].name);
+                        setSelectedKecamatan(itemValue);
+                        setSelectedPuskesmas(null);
+                      }}
+                    >
+                      <Picker.Item label="Pilih Kecamatan" value={null} />
+                      {kecamatan.map((kecamatan) => (
+                        <Picker.Item
+                          key={kecamatan.id}
+                          label={kecamatan.name}
+                          value={kecamatan.id}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+                </View>
+              ) : (
+                <></>
+              )}
+
+              {filteredPuskesmas != null ? (
+                <View style={{ marginTop: "5%" }}>
+                  <Text style={{ fontFamily: "Poppins-Bold" }}>Puskesmas</Text>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      marginTop: "5%",
+                    }}
+                  >
+                    <Picker
+                      ref={pickerRef}
+                      selectedValue={selectedPuskesmas} // Use selectedJK instead of setSelected
+                      onValueChange={(itemValue, itemIndex) =>
+                        setSelectedPuskesmas(itemValue)
+                      }
+                    >
+                      <Picker.Item label="Pilih Puskesmas" value={null} />
+                      {filteredPuskesmas.map((puskes) => (
+                        <Picker.Item
+                          key={puskes.id}
+                          label={puskes.name}
+                          value={puskes.id}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+                </View>
+              ) : (
+                <></>
+              )}
+
               <View style={{ marginTop: "5%" }}>
                 <InputForm
                   icon="phone"
@@ -307,7 +448,8 @@ export default function SignUpScreenUser({ navigation }) {
                       isSelected &&
                       isValidKTP &&
                       isValidKK &&
-                      selectedJK != null
+                      selectedJK != null &&
+                      selectedPuskesmas != null
                     )
                   }
                 />
