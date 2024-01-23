@@ -56,7 +56,6 @@ export default function SignInScreen({ navigation }) {
           text2: "Berhasil Masuk",
         });
 
-        console.log(data.data.user.role);
 
         await storeData("user", data.data).then(() => {
           if (data.data.user.role == "masyarakat") {

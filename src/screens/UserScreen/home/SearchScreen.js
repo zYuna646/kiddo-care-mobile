@@ -7,18 +7,19 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ArrowButton from "../../../component/Button/ArrowButton";
 import IconButton from "../../../component/Button/IconButton";
 import IconMenuButton from "../../../component/Button/IconMenuButton";
 import ArtikelCard from "../../../component/Card/ArtikelCard";
+import ApiRequest from "../../../utils/ApiRequest";
 
-export default function SearchScreen({ navigation }) {
-  const data = [
-    { id: "1", text: "Item 1asdasidjioasodjias" },
-    { id: "2", text: "Item 2saoijdisja" },
-    { id: "3", text: "Item 3" },
-  ];
+export default function SearchScreen({ navigation, route }) {
+
+  const [data, setData] = useState(route.kategori);
+  const [artikel, setArtikel] = useState(route.artikel);
+
+ 
 
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
@@ -31,6 +32,8 @@ export default function SearchScreen({ navigation }) {
       setRefreshing(false);
     }, 2000);
   };
+
+  
 
   return (
     <View style={{ flex: 1, width: "90%", alignSelf: "center" }}>
