@@ -28,7 +28,6 @@ export default function ProfileDetail({ navigation }) {
         setPuskesmas(data.puskesmas)
 
 
-
       } catch (error) {
         console.error("Error fetching user data:", error.message);
       }

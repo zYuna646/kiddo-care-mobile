@@ -1,4 +1,4 @@
-const BASE_URL = "https://accb-103-26-14-144.ngrok-free.app/api";
+const BASE_URL = "https://66c9-36-85-218-75.ngrok-free.app/api";
 import axios from "axios";
 
 const ApiRequest = async (endpoint, method = "GET", body = null, headers = {}, params={}) => {

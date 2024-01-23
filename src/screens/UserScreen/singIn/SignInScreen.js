@@ -50,17 +50,20 @@ export default function SignInScreen({ navigation }) {
         password: password,
       });
       if (data != null) {
-        
         Toast.show({
           type: "success",
           text1: "Masuk Akun",
           text2: "Berhasil Masuk",
         });
 
-        console.log(data);
+        console.log(data.data.user.role);
 
         await storeData("user", data.data).then(() => {
-          navigation.navigate("Home");
+          if (data.data.user.role == "masyarakat") {
+            navigation.navigate("Home");
+          } else {
+            navigation.navigate("HomePetugas");
+          }
         });
       }
     } catch (error) {
@@ -69,7 +72,6 @@ export default function SignInScreen({ navigation }) {
         text1: "Masuk Akun",
         text2: "Email/Nomor Telepon atau Password Salah",
       });
-      
     }
   };
 
@@ -149,7 +151,7 @@ export default function SignInScreen({ navigation }) {
           <View style={{ marginTop: "5%" }}>
             <CenterLineText title="Atau" />
           </View>
-         
+
           <View
             style={{
               marginTop: "5%",
