@@ -16,16 +16,28 @@ import GoogleButton from "../../../component/Button/GoogleButton";
 import Checkbox from "expo-checkbox";
 import Toast from "react-native-toast-message";
 import ApiRequest from "../../../utils/ApiRequest";
+import { Picker } from "@react-native-picker/picker";
+import LoadingIndicator from "../../../component/LoadingIndicator";
 
 export default function SignUpScreenUser({ navigation }) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [ktp, setKTP] = useState("");
+
+  const [puskesmas, setPuskesmas] = useState(null);
+
   const [kk, setKK] = useState("");
   const [number, setNumber] = useState("");
   const [confirm, setConfirm] = useState("");
   const [password, setPassword] = useState("");
   const [isSelected, setSelected] = useState(false);
+  const [selectedJK, setSelectedJK] = useState("Laki-Laki");
+
+  const [selectedPuskesmas, setSelectedPuskesmas] = useState(null);
+  const [selectedProvinsi, setSelectedProvinsi] = useState(null);
+  const [selectedKabupaten, setSelectedKabupaten] = useState(null);
+  const [selectedKecamatan, setSelectedKecamatan] = useState(null);
+
 
   const [isValidName, setValidName] = useState(false);
   const [isValidKTP, setValidKTP] = useState(false);
@@ -42,8 +54,8 @@ export default function SignUpScreenUser({ navigation }) {
     setValidEmail(emailRegex.test(email));
     setValidPhone(phoneRegex.test(number) && number.length >= 10);
     setValidName(!phoneRegex.test(name) && name.length >= 1);
-    setValidKTP(!phoneRegex.test(ktp) && ktp.length >= 1);
-    setValidKK(!phoneRegex.test(kk) && kk.length >= 1);
+    setValidKTP(phoneRegex.test(ktp) && ktp.length >= 1);
+    setValidKK(phoneRegex.test(kk) && kk.length >= 1);
     setValidPass(password.length > 6);
     setValidConfirmPass(confirm.length > 6 && confirm === password);
   };
@@ -54,22 +66,35 @@ export default function SignUpScreenUser({ navigation }) {
         email: email,
         phone: number,
         username: name,
+        jk: selectedJK,
         password: password,
         ktp: ktp,
         kk: kk,
-        role: 'masyarakat',
+        role: "masyarakat",
       };
-      const data = await ApiRequest("users/check", "POST", {
+
+      const data_check = {
         email: email,
         password: password,
-        phone: phone,
+        phone: number,
         username: name,
-      });
-      
+      };
+
+      const data = await ApiRequest("users/check", "POST", data_check);
+
       if (data.data) {
-        navigation.navigate("VerifikasiOTP", { data: registerData });
+        //navigation.navigate("VerifikasiOTP", { data: registerData });
+        await ApiRequest("users", "POST", registerData).then(() => {
+          Toast.show({
+            type: "success",
+            text1: "Buat Akun",
+            text2: "Akun Berhasil Dibuat",
+          });
+          navigation.navigate("SingIn");
+        });
       }
     } catch (error) {
+      console.log(error);
       Toast.show({
         type: "error",
         text1: "Buat Akun",
@@ -77,171 +102,247 @@ export default function SignUpScreenUser({ navigation }) {
       });
     }
   };
-
   useEffect(() => {
-    validateForm();
-  }, [email, password, name, confirm, password, kk, ktp]);
+    const fetchData = async () => {
+      try {
+        const data = await ApiRequest("puskesmas", "GET");
+        if (data != null) {
+          console.log(data);
+          setPuskesmas(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData(); // Call the async function here
+  }, []);
+
+  const pickerRef = useRef();
+
+  function open() {
+    pickerRef.current.focus();
+  }
+
+  function close() {
+    pickerRef.current.blur();
+  }
+
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <Text style={styles.PrymaryText}>Selamat</Text>
-          <Text style={styles.PrymaryText}>Bergabung!</Text>
-          <Text style={styles.normalText}>
-            Mengawali perjalanan kesehatan yang lebih baik dan lebih mudah
-            dimulai di sini
-          </Text>
-        </View>
-      </View>
-
-      <View style={styles.body}>
-        <ScrollView style={styles.bodyContent}>
-          <View>
-            <InputForm
-              icon="user"
-              title="Nama Lengkap"
-              onChangeText={setName}
-              value={name}
-            />
-          </View>
-          <View style={{ marginTop: "5%" }}>
-            <InputForm
-              icon="user"
-              title="Nomor KTP"
-              onChangeText={setKTP}
-              value={ktp}
-            />
-          </View>
-          <View style={{ marginTop: "5%" }}>
-            <InputForm
-              icon="user"
-              title="Nomor KK"
-              onChangeText={setKK}
-              value={kk}
-            />
-          </View>
-          <View style={{ marginTop: "5%" }}>
-            <InputForm
-              icon="envelope-o"
-              title="Email"
-              onChangeText={setEmail}
-              value={email}
-            />
-          </View>
-          <View style={{ marginTop: "5%" }}>
-            <InputForm
-              icon="phone"
-              title="Telepon"
-              onChangeText={setNumber}
-              value={number}
-            />
-          </View>
-
-          <View style={{ marginTop: "5%" }}>
-            <PasswordForm
-              icon="lock"
-              title="Password"
-              onChangeText={setPassword}
-              value={password}
-              visible={true}
-            />
-          </View>
-          <View style={{ marginTop: "5%" }}>
-            <PasswordForm
-              icon="lock"
-              title="Konfirmasi Password"
-              onChangeText={setConfirm}
-              value={confirm}
-              visible={true}
-            />
-          </View>
-
-          <View
-            style={{
-              marginTop: "5%",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Checkbox
-              style={styles.checkbox}
-              value={isSelected}
-              onValueChange={setSelected}
-              color={isSelected ? "#0B74FA" : undefined}
-            />
-            <View style={{ marginLeft: 10 }}>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontFamily: "Poppins-Light",
-                    fontSize: 12,
-                    marginRight: 5,
-                  }}
-                >
-                  Saya menerima segala isi
-                </Text>
-                <TextButton title="Syarat Penggunaan" />
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    fontFamily: "Poppins-Light",
-                    fontSize: 12,
-                    marginRight: 5,
-                  }}
-                >
-                  dan
-                </Text>
-                <TextButton title="Kebijakan Privasi" />
-                <Text
-                  style={{
-                    fontFamily: "Poppins-Light",
-                    fontSize: 12,
-                    marginLeft: 5,
-                  }}
-                >
-                  KiddoCare
-                </Text>
-              </View>
+    <>
+      {puskesmas != null ? (
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <View style={styles.headerContent}>
+              <Text style={styles.PrymaryText}>Selamat</Text>
+              <Text style={styles.PrymaryText}>Bergabung!</Text>
+              <Text style={styles.normalText}>
+                Mengawali perjalanan kesehatan yang lebih baik dan lebih mudah
+                dimulai di sini
+              </Text>
             </View>
           </View>
-          <View style={{ marginTop: "5%" }}>
-            <PrimaryButton
-              title="Buat Akun"
-              onPress={register}
-              disabled={
-                !(
-                  isValidEmail &&
-                  isValidPass &&
-                  isValidName &&
-                  isValidConfirmPass &&
-                  isValidPhone &&
-                  isSelected && isValidKTP && isValidKK
-                )
-              }
-            />
+
+          <View style={styles.body}>
+            <ScrollView style={styles.bodyContent}>
+              <View>
+                <InputForm
+                  icon="user"
+                  title="Nama Lengkap"
+                  onChangeText={setName}
+                  value={name}
+                />
+              </View>
+              <View style={{ marginTop: "5%" }}>
+                <InputForm
+                  icon="user"
+                  title="Nomor KTP"
+                  onChangeText={setKTP}
+                  value={ktp}
+                />
+              </View>
+              <View style={{ marginTop: "5%" }}>
+                <InputForm
+                  icon="user"
+                  title="Nomor KK"
+                  onChangeText={setKK}
+                  value={kk}
+                />
+              </View>
+              <View style={{ marginTop: "5%" }}>
+                <InputForm
+                  icon="envelope-o"
+                  title="Email"
+                  onChangeText={setEmail}
+                  value={email}
+                />
+              </View>
+              <View style={{ marginTop: "5%" }}>
+                <Text style={{ fontFamily: "Poppins-Bold" }}>
+                  Jenis Kelamin
+                </Text>
+                <View
+                  style={{ borderWidth: 1, borderRadius: 10, marginTop: "5%" }}
+                >
+                  <Picker
+                    ref={pickerRef}
+                    selectedValue={selectedJK} // Use selectedJK instead of setSelected
+                    onValueChange={(itemValue, itemIndex) =>
+                      setSelectedJK(itemValue)
+                    }
+                  >
+                    <Picker.Item label="Laki-Laki" value="Laki-Laki" />
+                    <Picker.Item label="Perempuan" value="Perempuan" />
+                  </Picker>
+                </View>
+              </View>
+              <View style={{ marginTop: "5%" }}>
+                <Text style={{ fontFamily: "Poppins-Bold" }}>
+                  Probinsi
+                </Text>
+                <View
+                  style={{ borderWidth: 1, borderRadius: 10, marginTop: "5%" }}
+                >
+                  <Picker
+                    ref={pickerRef}
+                    selectedValue={selectedJK} // Use selectedJK instead of setSelected
+                    onValueChange={(itemValue, itemIndex) =>
+                      setSelectedJK(itemValue)
+                    }
+                  >
+                    <Picker.Item label="Laki-Laki" value="Laki-Laki" />
+                    <Picker.Item label="Perempuan" value="Perempuan" />
+                  </Picker>
+                </View>
+              </View>
+              <View style={{ marginTop: "5%" }}>
+                <InputForm
+                  icon="phone"
+                  title="Telepon"
+                  onChangeText={setNumber}
+                  value={number}
+                />
+              </View>
+
+              <View style={{ marginTop: "5%" }}>
+                <PasswordForm
+                  icon="lock"
+                  title="Password"
+                  onChangeText={setPassword}
+                  value={password}
+                  visible={true}
+                />
+              </View>
+              <View style={{ marginTop: "5%" }}>
+                <PasswordForm
+                  icon="lock"
+                  title="Konfirmasi Password"
+                  onChangeText={setConfirm}
+                  value={confirm}
+                  visible={true}
+                />
+              </View>
+
+              <View
+                style={{
+                  marginTop: "5%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Checkbox
+                  style={styles.checkbox}
+                  value={isSelected}
+                  onValueChange={setSelected}
+                  color={isSelected ? "#0B74FA" : undefined}
+                />
+                <View style={{ marginLeft: 10 }}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        fontFamily: "Poppins-Light",
+                        fontSize: 12,
+                        marginRight: 5,
+                      }}
+                    >
+                      Saya menerima segala isi
+                    </Text>
+                    <TextButton title="Syarat Penggunaan" />
+                  </View>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        fontFamily: "Poppins-Light",
+                        fontSize: 12,
+                        marginRight: 5,
+                      }}
+                    >
+                      dan
+                    </Text>
+                    <TextButton title="Kebijakan Privasi" />
+                    <Text
+                      style={{
+                        fontFamily: "Poppins-Light",
+                        fontSize: 12,
+                        marginLeft: 5,
+                      }}
+                    >
+                      KiddoCare
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={{ marginTop: "5%" }}>
+                <PrimaryButton
+                  title="Buat Akun"
+                  onPress={register}
+                  disabled={
+                    !(
+                      isValidEmail &&
+                      isValidPass &&
+                      isValidName &&
+                      isValidConfirmPass &&
+                      isValidPhone &&
+                      isSelected &&
+                      isValidKTP &&
+                      isValidKK &&
+                      selectedJK != null
+                    )
+                  }
+                />
+              </View>
+              <View style={{ marginTop: "5%" }}>
+                <CenterLineText title="Atau" />
+              </View>
+
+              <View
+                style={{
+                  marginTop: "5%",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  marginBottom: "10%",
+                }}
+              >
+                <Text
+                  style={{ color: "#BDBDBD", fontSize: 12, marginRight: 5 }}
+                >
+                  SUdah memiliki akun?
+                </Text>
+                <TextButton
+                  title="Masuk Akun"
+                  onPress={() => {
+                    navigation.navigate("SingIn");
+                  }}
+                />
+              </View>
+            </ScrollView>
           </View>
-          <View style={{ marginTop: "5%" }}>
-            <CenterLineText title="Atau" />
-          </View>
-         
-          <View
-            style={{
-              marginTop: "5%",
-              flexDirection: "row",
-              justifyContent: "center",
-              marginBottom: "10%",
-            }}
-          >
-            <Text style={{ color: "#BDBDBD", fontSize: 12, marginRight: 5 }}>
-              SUdah memiliki akun?
-            </Text>
-            <TextButton title="Masuk Akun" onPress={() => {navigation.navigate('SingIn')}}/>
-          </View>
-        </ScrollView>
-      </View>
-    </View>
+        </View>
+      ) : (
+        <LoadingIndicator />
+      )}
+    </>
   );
 }
 

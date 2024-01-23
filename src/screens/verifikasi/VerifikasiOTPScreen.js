@@ -1,22 +1,15 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import TextButton from "../../component/Button/TextButton";
-import * as SMS from 'expo-sms';
+import * as SMS from "expo-sms";
 
-export default function VerifikasiOTPScreen({navigation, route}) {
-
+export default function VerifikasiOTPScreen({ navigation, route }) {
   const [data, setData] = useState(route.params.data);
 
-  const checkSMS = async () => {
-    const isAvailable = await SMS.isAvailableAsync();
-    if (isAvailable) {
-      // do your SMS stuff here
-    } else {
-      // misfortune... there's no SMS available on this device
-    }
-  }
-
-
+  
+  useEffect(() => {
+    
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -39,15 +32,15 @@ export default function VerifikasiOTPScreen({navigation, route}) {
               color: "#343A40",
             }}
           >
-            08539829
+            {data.phone}
           </Text>
           <View
             style={{
               flexDirection: "row",
               marginTop: "20%",
               justifyContent: "space-between",
-              alignSelf:'center',
-              width: '90%'
+              alignSelf: "center",
+              width: "90%",
             }}
           >
             <TextInput
@@ -73,11 +66,17 @@ export default function VerifikasiOTPScreen({navigation, route}) {
               maxLength={1}
             />
           </View>
-          <View style={{marginTop:'5%', alignItems:'center'}}>
-            <Text style={{color:'#9B9898', fontSize:10, fontFamily:'Poppins-Medium'}}>
-                Kirim ulang 60 detik
+          <View style={{ marginTop: "5%", alignItems: "center" }}>
+            <Text
+              style={{
+                color: "#9B9898",
+                fontSize: 10,
+                fontFamily: "Poppins-Medium",
+              }}
+            >
+              Kirim ulang 60 detik
             </Text>
-            <TextButton title="Verifikasi dengan email"/>
+            <TextButton title="Verifikasi dengan email" />
           </View>
         </View>
       </View>
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontFamily: "Poppins-Bold",
     textAlign: "center",
-    borderBottomWidth: 3
+    borderBottomWidth: 3,
   },
   header: {
     width: "100%",
