@@ -10,7 +10,7 @@ export default function NotifikasiScreen({ navigation }) {
         <ArrowButton
           title="Notifikasi"
           onPress={() => {
-            navigation.navigate("HomeUser");
+            navigation.navigate("Home");
           }}
         />
       </View>

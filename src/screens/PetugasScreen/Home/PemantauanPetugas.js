@@ -3,8 +3,8 @@ import React from 'react'
 
 export default function PemantauanPetugas() {
   return (
-    <View>
-      <Text>PemantauanPetugas</Text>
+    <View style={{flex:1, width:'90%'}}>
+      
     </View>
   )
 }

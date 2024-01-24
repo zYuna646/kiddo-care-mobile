@@ -40,12 +40,21 @@ export default function HomeScreen({ navigation }) {
     const fetchData = async () => {
       try {
         const userData = await getData("user");
-        const data = await ApiRequest("artikel/kategori");
-        const artikel = await ApiRequest("artikel");
+        
 
         if (userData == null) {
           navigation.replace("SingIn");
         }
+
+        if (userData.user.role == 'petugas') {
+          navigation.replace("HomePetugas");
+          
+        }
+
+        const data = await ApiRequest("artikel/kategori");
+        const artikel = await ApiRequest("artikel");
+
+
         setArtikel(artikel.artikel);
         setData(data.kategori);
         setUser(userData);
@@ -102,7 +111,7 @@ export default function HomeScreen({ navigation }) {
                     style={styles.imageTop}
                     source={{
                       uri:
-                        "https://7532-36-85-218-75.ngrok-free.app/uploads/catalog/image/" +
+                        "https://6087-103-26-12-152.ngrok-free.app/uploads/catalog/image/" +
                         artikel[0].cover,
                     }}
                     imageStyle={{ borderRadius: 20 }}
@@ -185,7 +194,7 @@ export default function HomeScreen({ navigation }) {
                       navigation.navigate("ArtikelDetail", { data: item });
                     }}
                     image={
-                      "https://7532-36-85-218-75.ngrok-free.app/uploads/catalog/image/" +
+                      "https://6087-103-26-12-152.ngrok-free.app/uploads/catalog/image/" +
                       item.cover
                     }
                     title={item.title}

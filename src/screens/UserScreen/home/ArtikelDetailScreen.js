@@ -27,6 +27,10 @@ export default function ArtikelDetailScreen({ navigation, route }) {
     fetchData();
   }, []);
 
+  const source = {
+    html: data.body,
+  };
+
   return (
     <>
       {kategori ? (
@@ -76,12 +80,12 @@ export default function ArtikelDetailScreen({ navigation, route }) {
                       data.cover,
                   }}
                   resizeMode="cover"
-                  style={{ height: 165, width: 356, borderRadius: 10 }}
+                  style={{ height: 165, width: 356, borderRadius: 10, alignSelf:'center' }}
                 />
               </View>
 
               <View style={{ marginTop: "5%" }}>
-                <RenderHtml contentWidth={width} source={data.body} />
+                <RenderHtml contentWidth={width} source={source} />
               </View>
             </ScrollView>
           </View>

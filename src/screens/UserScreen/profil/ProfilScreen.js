@@ -12,7 +12,6 @@ import { storeData, removeData } from "../../../utils/StorageData";
 import Toast from "react-native-toast-message";
 
 export default function ProfilScreen({ navigation }) {
-
   const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -152,8 +151,7 @@ export default function ProfilScreen({ navigation }) {
                     });
 
                     await removeData("user");
-
-                    navigation.navigate("Home");
+                    navigation.navigate("SingIn");
                   } else {
                     // Handle unexpected response status
                     console.error(

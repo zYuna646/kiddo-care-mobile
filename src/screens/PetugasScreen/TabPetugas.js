@@ -35,9 +35,9 @@ export default function TabPetugas() {
         name="Klasifikasi"
         component={KlasifikasiScreen}
         options={{
-          tabBarLabel: "Status",
+          tabBarLabel: "Klasifikasi",
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="circle-o" size={size} color={color} />
+            <AntDesign name="calculator" size={size} color={color} />
           ),
           headerShown: false,
         }}
@@ -46,9 +46,9 @@ export default function TabPetugas() {
         name="Laporan"
         component={LaporanScreen}
         options={{
-          tabBarLabel: "Status",
+          tabBarLabel: "Laporan",
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="circle-o" size={size} color={color} />
+            <AntDesign name="barschart" size={size} color={color} />
           ),
           headerShown: false,
         }}
