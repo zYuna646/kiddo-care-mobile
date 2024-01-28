@@ -1,7 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import React from "react";
+import IconMenuButton from "../Button/IconMenuButton";
 
-export default function PetugasCard({ name, nik, onPress, Gambar = null }) {
+export default function PetugasCard({ name, nik, onPress, Gambar = null, onPressHapus, onPressEdit }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View
@@ -13,7 +14,7 @@ export default function PetugasCard({ name, nik, onPress, Gambar = null }) {
           justifyContent: "center",
         }}
       >
-        <View style={{ flex: 1 , justifyContent:'center',}}>
+        <View style={{ flex: 1, justifyContent: "center" }}>
           <Image
             source={
               Gambar != null
@@ -21,20 +22,33 @@ export default function PetugasCard({ name, nik, onPress, Gambar = null }) {
                 : require("../../../assets/img/profile.png")
             }
             resizeMode="cover"
-            style={{ height: 41, width:41, alignSelf:'center' }}
+            style={{ height: 41, width: 41, alignSelf: "center" }}
           />
         </View>
-        <View style={{  flex: 3, justifyContent:'center' }}>
-            <Text style={{fontFamily:'Poppins-Bold', fontSize:14, }}>
-                {name}
-            </Text>
-            <Text style={{fontFamily:'Poppins-Medium', fontSize:12, }}>
-                {nik}
-            </Text>
+        <View style={{ flex: 3, justifyContent: "center" }}>
+          <Text style={{ fontFamily: "Poppins-Bold", fontSize: 14 }}>
+            {name}
+          </Text>
+          <Text style={{ fontFamily: "Poppins-Medium", fontSize: 12 }}>
+            {nik}
+          </Text>
         </View>
-        <View style={{ backgroundColor: "purple", flex: 1 }}>
-            <TouchableOpacity />
-            
+        <View
+          style={{
+            flex: 1,
+            justifyContent:'center'
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width:'75%'
+            }}
+          >
+            <IconMenuButton icon="trash" size={25} color="red" onPress={onPressHapus}/>
+            <IconMenuButton icon="edit" size={25} color="blue" onPress={onPressEdit}/>
+          </View>
         </View>
       </View>
     </TouchableOpacity>

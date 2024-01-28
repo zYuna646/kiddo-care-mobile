@@ -13,7 +13,7 @@ export default function LaporanScreen() {
           fontSize: 18,
         }}
       >
-        Klasifikasi Stunting
+        Laporan Stunting
       </Text>
     </View>
     <View style={{ marginTop: "5%" }}>

@@ -21,6 +21,7 @@ import NotifikasiScreen from "./src/screens/UserScreen/home/NotifikasiScreen";
 import SearchScreen from "./src/screens/UserScreen/home/SearchScreen";
 import TabPetugas from "./src/screens/PetugasScreen/TabPetugas";
 import ArtikelDetailScreen from "./src/screens/UserScreen/home/ArtikelDetailScreen";
+import InputAnakScreen from "./src/screens/PetugasScreen/input/InputAnakScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -62,7 +63,7 @@ export default function App() {
             component={TabUser}
             options={{ headerShown: false }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="HomePetugas"
             component={TabPetugas}
             options={{ headerShown: false }}
@@ -70,6 +71,11 @@ export default function App() {
           <Stack.Screen
             name="ArtikelDetail"
             component={ArtikelDetailScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="InputAnak"
+            component={InputAnakScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

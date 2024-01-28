@@ -22,7 +22,7 @@ export default function ProfilScreen({ navigation }) {
         console.error("Error fetching user data:", error.message);
       }
     };
-
+    
     fetchData();
   }, []);
 
