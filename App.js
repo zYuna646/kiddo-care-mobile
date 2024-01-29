@@ -29,6 +29,7 @@ import LaporanDataPeserta from "./src/screens/PetugasScreen/Home/LaporanDataPese
 import LaporanPengukuran from "./src/screens/PetugasScreen/Home/LaporanPengukuran";
 import LaporanPenerimaBantuan from "./src/screens/PetugasScreen/Home/LaporanPenerimaBantuan";
 import HasilPengukuran from "./src/screens/PetugasScreen/Klasifikasi/HasilPengukuran";
+import DetailAnak from "./src/screens/PetugasScreen/Home/DetailAnak";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -128,6 +129,11 @@ export default function App() {
           <Stack.Screen
             name="SingUpPetugas"
             component={SignUpScreenPetugas}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="DetailAnak"
+            component={DetailAnak}
             options={{ headerShown: false }}
           />
           <Stack.Screen

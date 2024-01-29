@@ -311,6 +311,9 @@ export default function HomePetugas({ navigation }) {
                         onPressHapus={() => {
                           sethapus(true);
                         }}
+                        onPressEdit={() => {
+                          navigation.navigate('DetailAnak', {anak: item})
+                        }}
                       />
                     </View>
                   ))}
