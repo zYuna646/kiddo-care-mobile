@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import IconMenuButton from "../../../component/Button/IconMenuButton";
-import { getData } from "../../../utils/StorageData";
+import { getData, removeData } from "../../../utils/StorageData";
 import ApiRequest from "../../../utils/ApiRequest";
 import LoadingIndicator from "../../../component/LoadingIndicator";
 import PetugasCard from "../../../component/Card/PetugasCard";
@@ -37,6 +37,11 @@ export default function HomePetugas({ navigation }) {
   const fetchData = async () => {
     try {
       const userData = await getData("user");
+
+      if (userData == null) {
+        navigation.replace("SingIn");
+      }
+      
       const data = await ApiRequest(
         "puskesmas/anak",
         "POST",
@@ -56,10 +61,6 @@ export default function HomePetugas({ navigation }) {
           Authorization: userData.user.token,
         }
       );
-
-      if (userData == null) {
-        navigation.replace("SingIn");
-      }
 
       setAll(users.user);
       setData(data.anak);
@@ -204,9 +205,11 @@ export default function HomePetugas({ navigation }) {
                       Hapus Data
                     </Text>
                     <View style={{ flexDirection: "row" }}>
-                      <TouchableOpacity onPress={() => {
-                        sethapus(false)
-                      }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          sethapus(false);
+                        }}
+                      >
                         <View
                           style={{
                             borderWidth: 1,

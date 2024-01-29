@@ -20,6 +20,7 @@ import Toast from "react-native-toast-message";
 export default function InputAnakScreen({ navigation }) {
   const [nik, setnik] = useState(null);
   const [name, setname] = useState(null);
+  const [anak, setanak] = useState(null);
   const [jk, setjk] = useState("Laki-Laki");
   const [buku, setbuku] = useState(false);
   const [menyusui, setmenyusui] = useState(false);
@@ -207,6 +208,16 @@ export default function InputAnakScreen({ navigation }) {
                 </View>
               </View>
               <View style={{ marginTop: "5%" }}>
+                <Text style={styles.TextForm}>Anak Ke-</Text>
+                <TextInput
+                  style={styles.Form}
+                  onChangeText={setanak}
+                  keyboardType="numeric"
+                  value={anak}
+                  placeholder="Masukkan Anak Keberapa"
+                />
+              </View>
+              <View style={{ marginTop: "5%" }}>
                 <Text style={styles.TextForm}>Berat Saat Lahir</Text>
                 <TextInput
                   keyboardType="numeric"
@@ -262,7 +273,8 @@ export default function InputAnakScreen({ navigation }) {
                     name != null &&
                     berat != null &&
                     tinggi != null &&
-                    orangTua != null
+                    orangTua != null &&
+                    anak != null
                   )
                 }
                 onPress={async () => {
@@ -276,6 +288,7 @@ export default function InputAnakScreen({ navigation }) {
                       tanggal_lahir: new Date(tgl).toISOString().split('T')[0],  // Format as Y-m-d
                       berat: berat,
                       tinggi: tinggi,
+                      anak_ke: anak,
                       masyarakat_id: orangTua,
                       puskesmas_id: userData.petugas.puskesmas_id,
                     };

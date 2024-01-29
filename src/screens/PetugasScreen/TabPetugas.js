@@ -6,6 +6,7 @@ import HomePetugas from "./Home/HomePetugas";
 import PemantauanPetugas from "./Home/PemantauanPetugas";
 import KlasifikasiScreen from "./Home/KlasifikasiScreen";
 import LaporanScreen from "./Home/LaporanScreen";
+import PertumbuhanAnak from "./Klasifikasi/PertumbuhanAnak";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +34,7 @@ export default function TabPetugas() {
       />
       <Tab.Screen
         name="Klasifikasi"
-        component={KlasifikasiScreen}
+        component={PertumbuhanAnak}
         options={{
           tabBarLabel: "Klasifikasi",
           tabBarIcon: ({ color, size }) => (

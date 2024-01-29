@@ -22,6 +22,13 @@ import SearchScreen from "./src/screens/UserScreen/home/SearchScreen";
 import TabPetugas from "./src/screens/PetugasScreen/TabPetugas";
 import ArtikelDetailScreen from "./src/screens/UserScreen/home/ArtikelDetailScreen";
 import InputAnakScreen from "./src/screens/PetugasScreen/input/InputAnakScreen";
+import PertumbuhanAnak from "./src/screens/PetugasScreen/Klasifikasi/PertumbuhanAnak";
+import PertumbuhanAnakKlasifikasi from "./src/screens/PetugasScreen/Klasifikasi/PertumbuhanAnakKlasifikasi";
+import KlasifikasiDetail from "./src/screens/PetugasScreen/Klasifikasi/KlasifikasiDetail";
+import LaporanDataPeserta from "./src/screens/PetugasScreen/Home/LaporanDataPeserta";
+import LaporanPengukuran from "./src/screens/PetugasScreen/Home/LaporanPengukuran";
+import LaporanPenerimaBantuan from "./src/screens/PetugasScreen/Home/LaporanPenerimaBantuan";
+import HasilPengukuran from "./src/screens/PetugasScreen/Klasifikasi/HasilPengukuran";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -66,6 +73,41 @@ export default function App() {
           <Stack.Screen
             name="HomePetugas"
             component={TabPetugas}
+            options={{ headerShown: false }}
+          />
+            <Stack.Screen
+            name="LaporanDataPeserta"
+            component={LaporanDataPeserta}
+            options={{ headerShown: false }}
+          />
+            <Stack.Screen
+            name="HasilPengukuran"
+            component={HasilPengukuran}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="LaporanPengukuran"
+            component={LaporanPengukuran}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="LaporanPenerimaBantuan"
+            component={LaporanPenerimaBantuan}
+            options={{ headerShown: false }}
+          />
+            <Stack.Screen
+            name="KlasifikasiDetail"
+            component={KlasifikasiDetail}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="KlasifikasiAnak"
+            component={PertumbuhanAnakKlasifikasi}
+            options={{ headerShown: false }}
+          />
+            <Stack.Screen
+            name="PertumbuhanAnak"
+            component={PertumbuhanAnak}
             options={{ headerShown: false }}
           />
           <Stack.Screen
