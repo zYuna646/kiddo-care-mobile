@@ -1,7 +1,8 @@
 import axios from "axios";
+import {WILAYAH_API_URL, WILAYAH_API_KEY}  from '@env'
 
-const BASE_URL = "http://api.binderbyte.com/wilayah";
-const API_KEY = "93ed7ed0d33583305428bf71e8bd62e4c73b5ccc7ba1a426063b27f67a84f123";
+const BASE_URL = WILAYAH_API_URL;
+const API_KEY = WILAYAH_API_KEY;
 
 const WilayahApi = async (endpoint, method = "GET", body = null, headers = {}) => {
   const url = `${BASE_URL}/${endpoint}`;

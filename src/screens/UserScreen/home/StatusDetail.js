@@ -201,8 +201,9 @@ export default function StatusDetail({ navigation, route }) {
               </View>
             </View>
             <View style={{ alignSelf: "center", width: "90%" }}>
-              <StatusDetailCard radioButton={radioButtons} setSelected={setSelectedId} selected={selectedId}/>
-              <StatusDetailCard radioButton={radioButtons} setSelected={setSelectedId} selected={selectedId}/>
+              <StatusDetailCard radioButton={radioButtons} setSelected={setSelectedId} selected={selectedId} nomor="1" question="Bayi bisa berbalik dari telungkup ke telentang"/>
+              <StatusDetailCard radioButton={radioButtons} setSelected={setSelectedId} selected={selectedId} nomor="2" question="Bayi bisa mengangkat kepala secara mandiri hingga tegak 90˚"/>
+              <StatusDetailCard radioButton={radioButtons} setSelected={setSelectedId} selected={selectedId} nomor="3" question="Bayi bayi bisa mempertahankan posisi kepala tetap tegak dan stabil"/>
             </View>
           </View>
         </ScrollView>

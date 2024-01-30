@@ -12,11 +12,11 @@ export default function StatusDetailCard({
   return (
     <View style={styles.container}>
       <View style={styles.number}>
-        <Text style={{ fontFamily: "Poppins-Light" }}>1.</Text>
+        <Text style={{ fontFamily: "Poppins-Light" }}>{nomor}.</Text>
       </View>
       <View style={styles.question}>
         <Text style={{ fontFamily: "Poppins-Light" }}>
-          Bayi Bisa Terlentang dengan sangat santuy
+          {question}
         </Text>
       </View>
       <View style={styles.radio}>

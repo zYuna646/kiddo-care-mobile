@@ -18,6 +18,7 @@ import TextButton from "../../../component/Button/TextButton";
 import ArtikelCard from "../../../component/Card/ArtikelCard";
 import LoadingIndicator from "../../../component/LoadingIndicator";
 import ApiRequest from "../../../utils/ApiRequest";
+import {API_URL}  from '@env'
 
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState(null);
@@ -108,7 +109,7 @@ export default function HomeScreen({ navigation }) {
                     style={styles.imageTop}
                     source={{
                       uri:
-                        "https://7e7e-140-213-122-220.ngrok-free.app/uploads/catalog/image/" +
+                        `${API_URL}/uploads/catalog/image/` +
                         artikel[0].cover,
                     }}
                     imageStyle={{ borderRadius: 20 }}
