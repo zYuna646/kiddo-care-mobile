@@ -1,12 +1,104 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { ScrollView, StyleSheet, Text, View  , RefreshControl,} from "react-native";
+import React, { useEffect, useState } from "react";
+import ArrowButton from "../../../component/Button/ArrowButton";
+import LoadingIndicator from "../../../component/LoadingIndicator";
+import { getData } from "../../../utils/StorageData";
+import ApiRequest from "../../../utils/ApiRequest";
+import StatusCard from "../../../component/Card/StatusCard";
+import NormalCard from "../../../component/Card/NormalCard";
 
-export default function PemantauanPetugas() {
+export default function PemantauanPetugas({ navigation }) {
+  const [data, setData] = useState(null);
+  const [all, setAll] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const userData = await getData("user");
+
+      if (userData == null) {
+        navigation.replace("SingIn");
+      }
+
+      const data = await ApiRequest(
+        "puskesmas/anak",
+        "POST",
+        {
+          puskesmas_id: userData.petugas.puskesmas_id,
+        },
+        {
+          Authorization: userData.user.token,
+        }
+      );
+
+      const users = await ApiRequest(
+        "users/all",
+        "GET",
+        {},
+        {
+          Authorization: userData.user.token,
+        }
+      );
+      hasil = data.anak;
+      filterHasil = hasil.filter((status) => status.status == "1");
+      filterBantuan = hasil.filter((bantuan) => bantuan.isBantuan == '1')
+      setAll(users.user);
+      setData(filterBantuan);
+      setUser(userData);
+    } catch (error) {
+      console.error("Error fetching user data:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    // Your refresh logic here
+    fetchData();
+    // For example, you might fetch new data from an API
+    setRefreshing(true);
+
+    // Simulating a network request
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
+
   return (
-    <View style={{flex:1, width:'90%'}}>
-      
-    </View>
-  )
+    <>
+      {data != null ? (
+        <View style={{ flex: 1, width: "90%", alignSelf: "center" }}>
+         
+          <View style={{ flex: 12,marginTop:'10%' }}>
+          <ScrollView style={{ flex: 1 }}  refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }>
+              {data.map((item) => (
+                <View key={item.id} style={{marginTop:'2%'}}>
+                  <NormalCard
+                    name={item.name}
+                    kelamin={item.jenis_kelamin}
+                    no_ktp={item.nik}
+                    anak_ke={item.anak_ke}
+                    nama_ibu={
+                      all.find((dt) => dt.id === item.masyrakat_id)?.username
+                    }
+                    onPress={() => {
+                        navigation.navigate('PemantauanDetail', {data: item})
+                    }}
+                  />
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      ) : (
+        <LoadingIndicator />
+      )}
+    </>
+  );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

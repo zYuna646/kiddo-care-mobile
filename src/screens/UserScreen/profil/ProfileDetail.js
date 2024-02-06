@@ -11,31 +11,41 @@ import ApiRequest from "../../../utils/ApiRequest";
 export default function ProfileDetail({ navigation }) {
   const [user, setUser] = useState(null);
   const [userDetail, setUserDetail] = useState(null);
-  const [puskesmas, setPuskesmas] = useState(null)
+  const [puskesmas, setPuskesmas] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userData = await getData("user");
-      
-        setUser(userData.user)
-        setUserDetail(userData.masyarakat)
+        console.log(userData);
+        if (userData.user.role == "user") {
+          setUser(userData.user);
+          setUserDetail(userData.masyarakat);
 
-        const data = await ApiRequest("puskesmas/id", "POST", {
-          id: userData.masyarakat.puskesmas_id
-        });
+          const data = await ApiRequest("puskesmas/id", "POST", {
+            id: userData.masyarakat.puskesmas_id,
+          });
 
+          setPuskesmas(data.puskesmas);
+        } else {
+          setUser(userData.user);
+          console.log(userData);
+          setUserDetail(userData.petugas);
 
-        setPuskesmas(data.puskesmas)
+          const data = await ApiRequest("puskesmas/id", "POST", {
+            id: userData.petugas.puskesmas_id,
+          });
 
-
+          setPuskesmas(data.puskesmas);
+        }
       } catch (error) {
-       
         console.error("Error fetching user data:", error.message);
       }
     };
 
     fetchData();
   }, []);
+
+  console.log(userDetail);
 
   return (
     <>
@@ -107,7 +117,9 @@ export default function ProfileDetail({ navigation }) {
             <View style={styles.ProfileDetail}>
               <View>
                 <Text style={styles.detailHeader}>Jenis Kelamin</Text>
-                <Text style={styles.detailBold}>{userDetail.jenis_kelamin}</Text>
+                <Text style={styles.detailBold}>
+                  {userDetail.jenis_kelamin}
+                </Text>
               </View>
               <View>
                 <Text style={styles.detailHeader}>No. Telepon</Text>

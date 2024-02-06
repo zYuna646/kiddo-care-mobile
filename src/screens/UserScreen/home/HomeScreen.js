@@ -18,13 +18,17 @@ import TextButton from "../../../component/Button/TextButton";
 import ArtikelCard from "../../../component/Card/ArtikelCard";
 import LoadingIndicator from "../../../component/LoadingIndicator";
 import ApiRequest from "../../../utils/ApiRequest";
-import {API_URL}  from '@env'
+import { API_URL } from "@env";
+import Draggable from "react-native-draggable";
 
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState(null);
   const [artikel, setArtikel] = useState(null);
+  const [filter, setfilter] = useState(null);
+  const [coverArtikel, setCover] = useState(null);
+  const [selectedIndex, setSelected] = useState(0);
 
   const onRefresh = () => {
     // Your refresh logic here
@@ -46,16 +50,17 @@ export default function HomeScreen({ navigation }) {
           navigation.replace("SingIn");
         }
 
-        if (userData.user.role == 'petugas') {
+        if (userData.user.role == "petugas") {
           navigation.replace("HomePetugas");
-          
         }
         const data = await ApiRequest("artikel/kategori");
         const artikel = await ApiRequest("artikel");
 
         setArtikel(artikel.artikel);
         setData(data.kategori);
+        setfilter(artikel)
         setUser(userData);
+        
       } catch (error) {
         console.error("Error fetching user data:", error.message);
       }
@@ -77,7 +82,10 @@ export default function HomeScreen({ navigation }) {
                   icon="search"
                   size={22}
                   onPress={() => {
-                    navigation.navigate("Search", {artikel: artikel, kategori: data});
+                    navigation.navigate("Search", {
+                      artikel: artikel,
+                      kategori: data,
+                    });
                   }}
                 />
                 <IconMenuButton
@@ -102,7 +110,9 @@ export default function HomeScreen({ navigation }) {
               <View style={styles.top}>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("ArtikelDetail", { data: artikel[0] });
+                    navigation.navigate("ArtikelDetail", {
+                      data: artikel[0],
+                    });
                   }}
                 >
                   <ImageBackground
@@ -143,15 +153,24 @@ export default function HomeScreen({ navigation }) {
                     style={{ width: 350, height: 10 }}
                     horizontal={true}
                   >
-                    {data.map((item) => (
+                    {data.map((item, index) => (
                       <TouchableOpacity
                         key={item.id}
                         style={{ marginRight: 5, marginLeft: 5 }}
+                        onPress={() => {
+                          setSelected(index);
+                          setfilter(item.id);
+                          hasil = artikel.filter(
+                            (item_artikel) => item_artikel.kategori_id == item.id
+                          );
+                          setfilter(hasil);
+                        }}
                       >
                         <View
                           style={{
                             height: 34,
-                            backgroundColor: "#5FCFFF",
+                            backgroundColor:
+                              selectedIndex === index ? "#5FCFFF" : "white",
                             alignContent: "center",
                             borderRadius: 20,
                             borderWidth: 1,
@@ -178,29 +197,57 @@ export default function HomeScreen({ navigation }) {
             </View>
           </View>
           <View style={styles.artikel}>
-            <FlatList
-              data={artikel}
-              keyExtractor={(item) => item.id.toString()}
-              numColumns={2} // Set the number of columns to 2
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-              renderItem={({ item }) => {
-                return (
-                  <ArtikelCard
-                    onPress={() => {
-                      navigation.navigate("ArtikelDetail", { data: item });
-                    }}
-                    image={
-                      "https://7e7e-140-213-122-220.ngrok-free.app/uploads/catalog/image/" +
-                      item.cover
-                    }
-                    title={item.title}
+            {artikel != null || artikel != [] ? (
+              <FlatList
+                data={filter}
+                keyExtractor={(item) => item.id.toString()}
+                numColumns={2} // Set the number of columns to 2
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
                   />
-                );
+                }
+                renderItem={({ item }) => {
+                  return (
+                    <ArtikelCard
+                      onPress={() => {
+                        navigation.navigate("ArtikelDetail", { data: item });
+                      }}
+                      image={
+                        "https://7e7e-140-213-122-220.ngrok-free.app/uploads/catalog/image/" +
+                        item.cover
+                      }
+                      title={item.title}
+                    />
+                  );
+                }}
+              />
+            ) : (
+              <></>
+            )}
+          </View>
+          <Draggable
+            x={100}
+            y={100} // Set the initial y value to position it at the bottom
+            renderSize={56}
+            renderColor="red"
+            isCircle
+            onShortPressRelease={() => {
+              navigation.navigate("Chatbot");
+            }}
+          >
+            <Image
+              source={require("../../../../assets/img/chatbot.png")}
+              resizeMode="cover"
+              style={{
+                height: 60,
+                width: 60,
+                backgroundColor: "white",
+                borderRadius: 50,
               }}
             />
-          </View>
+          </Draggable>
         </View>
       ) : (
         <LoadingIndicator />

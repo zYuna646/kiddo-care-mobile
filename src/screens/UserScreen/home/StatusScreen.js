@@ -1,72 +1,66 @@
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  RefreshControl,
-  ScrollView,
-} from "react-native";
-import React, { useState } from "react";
-import ArtikelCard from "../../../component/Card/ArtikelCard";
+import { ScrollView, StyleSheet, Text, View  , RefreshControl,} from "react-native";
+import React, { useEffect, useState } from "react";
+import ArrowButton from "../../../component/Button/ArrowButton";
+import LoadingIndicator from "../../../component/LoadingIndicator";
+import { getData } from "../../../utils/StorageData";
+import ApiRequest from "../../../utils/ApiRequest";
 import StatusCard from "../../../component/Card/StatusCard";
+import NormalCard from "../../../component/Card/NormalCard";
 
-export default function StatusScreen({navigation}) {
-  const [selectedId, setselectedId] = useState(null);
+export default function StatusScreen({ navigation }) {
+  const [data, setData] = useState(null);
+  const [all, setAll] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const userData = await getData("user");
+
+      if (userData == null) {
+        navigation.replace("SingIn");
+      }
+
+      const data = await ApiRequest(
+        "puskesmas/anak",
+        "POST",
+        {
+          puskesmas_id: userData.masyarakat.puskesmas_id,
+        },
+        {
+          Authorization: userData.user.token,
+        }
+      );
+
+      const users = await ApiRequest(
+        "users/all",
+        "GET",
+        {},
+        {
+          Authorization: userData.user.token,
+        }
+      );
+
+
+      hasil = data.anak
+      filterAnak = hasil.filter((orangtua) => orangtua.masyrakat_id == userData.masyarakat.id)
+
+      
+
+      setAll(users.user);
+      setData(data.anak);
+      setUser(userData);
+    } catch (error) {
+      console.error("Error fetching user data:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   const [refreshing, setRefreshing] = useState(false);
-
-  const data = [
-    {
-      id: 1,
-      name: "Kristin",
-      kelamin: "Laki-laki",
-      nama_ibu: "Ibu",
-      status: true,
-      no_ktp: "02020202",
-    },
-    {
-      id: 2,
-      name: "ini",
-      kelamin: "Perempuan",
-      nama_ibu: "Ibu",
-      status: false,
-      no_ktp: "02020202",
-    },
-    {
-      id: 3,
-      name: "Kristin",
-      kelamin: "Laki-laki",
-      nama_ibu: "Ibu",
-      status: true,
-      no_ktp: "02020202",
-    },
-    {
-      id: 4,
-      name: "ini",
-      kelamin: "Laki-laki",
-      nama_ibu: "Ibu",
-      status: false,
-      no_ktp: "02020202",
-    },
-    {
-      id: 5,
-      name: "Kristin",
-      kelamin: "Laki-laki",
-      nama_ibu: "Ibu",
-      status: true,
-      no_ktp: "02020202",
-    },
-    {
-      id: 6,
-      name: "ini",
-      kelamin: "Laki-laki",
-      nama_ibu: "Ibu",
-      status: false,
-      no_ktp: "02020202",
-    },
-  ];
-
   const onRefresh = () => {
     // Your refresh logic here
+    fetchData();
     // For example, you might fetch new data from an API
     setRefreshing(true);
 
@@ -77,45 +71,38 @@ export default function StatusScreen({navigation}) {
   };
 
   return (
-    <View style={styles.container}>
-      <View
-        style={{
-          flex: 1,
-          width: "100%",
-          marginTop: "10%",
-          alignSelf: "center",
-        }}
-      >
-        <FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          data={data}
-          renderItem={({ item, index }) => (
-            <StatusCard
-              name={item.name}
-              kelamin={item.kelamin}
-              nama_ibu={item.nama_ibu}
-              no_ktp={item.no_ktp}
-              id={item.id}
-              status={item.status}
-              index={index}
-              onPress={() => {navigation.navigate('StatusDetail', {data: item, index: index})}}
-            />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-          extraData={selectedId}
-        />
-      </View>
-    </View>
+    <>
+      {data != null ? (
+        <View style={{ flex: 1, width: "90%", alignSelf: "center" }}>
+         
+          <View style={{ flex: 12,marginTop:'10%' }}>
+          <ScrollView style={{ flex: 1 }}  refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }>
+              {data.map((item) => (
+                <View key={item.id} style={{marginTop:'2%'}}>
+                  <NormalCard
+                    name={item.name}
+                    kelamin={item.jenis_kelamin}
+                    no_ktp={item.nik}
+                    anak_ke={item.anak_ke}
+                    nama_ibu={
+                      all.find((dt) => dt.id === item.masyrakat_id)?.username
+                    }
+                    onPress={() => {
+                      navigation.navigate('StatusDetail', {data: item})
+                    }}
+                  />
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      ) : (
+        <LoadingIndicator />
+      )}
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignSelf: "center",
-    flex: 1,
-    width: "90%",
-  
-  },
-});
+const styles = StyleSheet.create({});

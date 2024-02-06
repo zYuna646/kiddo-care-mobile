@@ -64,6 +64,7 @@ export default function LaporanPengukuran({ navigation }) {
         }
       );
 
+     
       setAll(users.user);
       setData(data.anak);
       setUser(userData);
@@ -71,6 +72,8 @@ export default function LaporanPengukuran({ navigation }) {
       console.error("Error fetching user data:", error.message);
     }
   };
+
+
 
   useEffect(() => {
     fetchData();
@@ -105,7 +108,7 @@ export default function LaporanPengukuran({ navigation }) {
           <View style={styles.header}>
             <View style={styles.headerContent}>
               <View>
-                <ArrowButton colorArrow="white" color="white" title='Laporan Data Peserta' onPress={() => {
+                <ArrowButton colorArrow="white" color="white" title='Laporan Pengukuran' onPress={() => {
                   navigation.navigate('HomePetugas')
                 }}/>
               </View>
@@ -129,6 +132,7 @@ export default function LaporanPengukuran({ navigation }) {
                         onPressHapus={() => {
                           sethapus(true);
                         }}
+                        status={item.status}
                       />
                     </View>
                   ))}

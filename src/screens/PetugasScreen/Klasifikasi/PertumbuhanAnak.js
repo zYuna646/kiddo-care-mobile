@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View  , RefreshControl,} from "react-native";
 import React, { useEffect, useState } from "react";
 import ArrowButton from "../../../component/Button/ArrowButton";
 import LoadingIndicator from "../../../component/LoadingIndicator";
@@ -51,6 +51,18 @@ export default function PertumbuhanAnak({ navigation }) {
   useEffect(() => {
     fetchData();
   }, []);
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    // Your refresh logic here
+    fetchData();
+    // For example, you might fetch new data from an API
+    setRefreshing(true);
+
+    // Simulating a network request
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
 
   return (
     <>
@@ -58,7 +70,9 @@ export default function PertumbuhanAnak({ navigation }) {
         <View style={{ flex: 1, width: "90%", alignSelf: "center" }}>
          
           <View style={{ flex: 12,marginTop:'10%' }}>
-          <ScrollView style={{ flex: 1 }}>
+          <ScrollView style={{ flex: 1 }}  refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }>
               {data.map((item) => (
                 <View key={item.id} style={{marginTop:'2%'}}>
                   <NormalCard

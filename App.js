@@ -30,6 +30,10 @@ import LaporanPengukuran from "./src/screens/PetugasScreen/Home/LaporanPengukura
 import LaporanPenerimaBantuan from "./src/screens/PetugasScreen/Home/LaporanPenerimaBantuan";
 import HasilPengukuran from "./src/screens/PetugasScreen/Klasifikasi/HasilPengukuran";
 import DetailAnak from "./src/screens/PetugasScreen/Home/DetailAnak";
+import PemantuanDetail from "./src/screens/PetugasScreen/Home/PemantuanDetail";
+import ChatBot from "./src/screens/UserScreen/home/ChatBot";
+import InputPemantauan from "./src/screens/PetugasScreen/Home/InputPemantauan";
+import CommentPemantauan from "./src/screens/PetugasScreen/Home/CommentPemantauan";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -89,6 +93,21 @@ export default function App() {
           <Stack.Screen
             name="LaporanPengukuran"
             component={LaporanPengukuran}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="PemantauanDetail"
+            component={PemantuanDetail}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="InputPemantauan"
+            component={InputPemantauan}
+            options={{ headerShown: false }}
+          />
+            <Stack.Screen
+            name="CommentPemantauan"
+            component={CommentPemantauan}
             options={{ headerShown: false }}
           />
            <Stack.Screen
@@ -170,6 +189,11 @@ export default function App() {
           <Stack.Screen
             name="StatusDetail"
             component={StatusDetail}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Chatbot"
+            component={ChatBot}
             options={{ headerShown: false }}
           />
           <Stack.Screen

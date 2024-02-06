@@ -26,6 +26,7 @@ export default function ProfilScreen({ navigation }) {
     fetchData();
   }, []);
 
+  console.log(user);
   return (
     <>
       {user ? (

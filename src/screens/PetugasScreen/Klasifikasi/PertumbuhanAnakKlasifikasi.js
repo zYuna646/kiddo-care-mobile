@@ -10,6 +10,7 @@ export default function PertumbuhanAnakKlasifikasi({ navigation, route }) {
   const [tinggianak, settinggi] = useState(null);
   const [visible, setvisible] = useState(false);
   const [stunting, setstunting] = useState(false);
+  const [umur, setumur] = useState(null);
   return (
     <View
       style={{
@@ -108,6 +109,7 @@ export default function PertumbuhanAnakKlasifikasi({ navigation, route }) {
                       if ((data.Hasil = "Stunting")) {
                         setvisible(true);
                         setstunting(true);
+                        setumur(monthsDifference)
                       }else
                       {
                         setvisible(true)
@@ -148,7 +150,7 @@ export default function PertumbuhanAnakKlasifikasi({ navigation, route }) {
                   </Text>
                   <View style={{ padding: 20, marginTop: "10%" }}>
                     <PrimaryButton title="Selanjutnya" onPress={() => {
-                        navigation.navigate('KlasifikasiDetail')
+                        navigation.navigate('KlasifikasiDetail', {data: route.params.data, umur: umur})
                     }}/>
                   </View>
                 </View>

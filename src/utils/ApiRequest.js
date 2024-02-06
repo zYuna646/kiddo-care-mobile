@@ -2,7 +2,7 @@ import axios from "axios";
 import {API_URL}  from '@env'
 
 
-const BASE_URL = `${API_URL}/api`;
+const BASE_URL = `https://d8fc-114-125-202-151.ngrok-free.app/api`;
 
 const ApiRequest = async (endpoint, method = "GET", body = null, headers = {}, params={}) => {
   const url = `${BASE_URL}/${endpoint}`;

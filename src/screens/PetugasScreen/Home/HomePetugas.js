@@ -70,6 +70,7 @@ export default function HomePetugas({ navigation }) {
     }
   };
 
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -264,7 +265,7 @@ export default function HomePetugas({ navigation }) {
                 <Text style={styles.logo}>KiddoCare</Text>
               </View>
               <View style={styles.menu}>
-                <IconMenuButton
+                {/* <IconMenuButton
                   icon="search"
                   size={22}
                   color="white"
@@ -274,7 +275,7 @@ export default function HomePetugas({ navigation }) {
                     //   kategori: data,
                     // });
                   }}
-                />
+                /> */}
                 <IconMenuButton
                   icon="bell-o"
                   color="white"
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
 
   menu: {
     flexDirection: "row",
-    width: "30%",
+    width: "20%",
     justifyContent: "space-between",
   },
   header: {

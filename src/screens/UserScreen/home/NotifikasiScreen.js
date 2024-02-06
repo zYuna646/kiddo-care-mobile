@@ -17,12 +17,10 @@ export default function NotifikasiScreen({ navigation }) {
 
       <View style={styles.container}>
         <Text style={styles.containerText}>Belum Dibaca</Text>
-        <NotifikasiCard title="Silahlan Lakukan Pengukuran" date="2 jan 14:00" status={true} />
       </View>
 
       <View style={styles.container}>
         <Text style={styles.containerText}>Telah Dibaca</Text>
-        <NotifikasiCard title="Pengukuran Belum Di Lakukan" date="2 jan 14:00" />
       </View>
     </View>
   );
